@@ -1,3 +1,5 @@
 from django.shortcuts import render
+# from . import models
 
-# Create your views here.
+def mainpage(request):
+    return render(request,"calcmain/mainpage.html",{})
