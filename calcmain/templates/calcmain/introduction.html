@@ -1,0 +1,23 @@
+{% extends 'calcmain/base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+
+<div class = "container">
+
+    <div class="title text-center">
+        <h1 class="title title-introduction">Introduction to Application</h1>
+
+        <div class="well well-intro div-centered">
+            In oncology trial, the important outcomes for treatment effect are response rate and progression free survival which are evaluated based on <b>RECIST (Response Evaluation Criteria In Solid Tumors)</b>
+        </div>
+        <div class="well well-intro div-centered">
+            This application calculates the distribution of proportion of patients who were diagnosed with partial <b>response (or progression) </b>when same radiologist or other radiologists re-measure all CT scans.
+        </div>
+
+        <a class="btn btn-lg btn-info btn-main btn" href="{% url 'calcmain:dataimport' %}" role="button">START</a>
+    </div>
+
+</div>
+
+{% endblock %}

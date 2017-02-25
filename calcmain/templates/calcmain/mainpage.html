@@ -1,27 +1,72 @@
+{% extends 'calcmain/base.html' %}
 {% load staticfiles %}
 
-<!DOCTYPE html>
-<html lang="en">
+{% block content %}
 
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<div class = "container">
 
-    <title>Measurement variability calculator (RECIST 1.1)</title>
+    <div class="title text-center">
+        <h1 class="title title-main">Measurement variability calculator (RECIST 1.1)</h1>
+        <a class="btn btn-lg btn-info btn-main btn" href="{% url 'calcmain:introduction' %}" role="button">NEXT</a>
+    </div>
 
-    <link href="{% static 'calcmain/css/bootstrap.min.css' %}" rel="stylesheet">
-    <link href="{% static 'calcmain/css/bootstrap-theme.min.css' %}" rel="stylesheet">
+</div>
 
-</head>
+<!-- for announcing "Under construction" -->
+<!--
+<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+<div class="card">
+<ul class="list-group">
+<li class="list-group-item"><span class="glyphicon gly
+phicon-tag"></span> <strong>Chocolate Cupcake</strong></li>
+<li class="list-group-item"><span class="glyphicon gly
+phicon-usd"></span> 3.00</li>
+<li class="list-group-item"><span class="glyphicon gly
+phicon-pencil"></span> John</li>
+<li class="list-group-item"><span class="glyphicon gly
+phicon-calendar"></span> 3rd June, 2015</li>
+<li class="list-group-item">
+<span class="glyphicon glyphicon-star"></span>
+<span class="glyphicon glyphicon-star"></span>
+<span class="glyphicon glyphicon-star"></span>
+<span class="glyphicon glyphicon-star"></span>
+<span class="glyphicon glyphicon-star"></span>
+</li>
+<li class="list-group-item">
+<button type="button" class="btn btn-primary" data-t
+oggle="modal" data-target="#myModal">
+Order
+</button>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
 
-<body>
+Modal
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+aria-labelledby="myModalLabel">
+<div class="modal-dialog" role="document">
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal"
+aria-label="Close"><span aria-hidden="true">&times;</span></butt
+on>
+<h4 class="modal-title" id="myModalLabel">Chocolate Cupc
+ake</h4>
+</div>
+<div class="modal-body">
+Complete this website to get your Cupcake!
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-default" data-dismi
+ss="modal">Close</button>
+</div>
+</div>
+</div>
+</div>
+ -->
 
-<h1>Test</h1>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <script src="{% static 'calcmain/js/bootstrap.min.js' %}"></script>
-
-</body>
-
-</html>
+{% endblock %}

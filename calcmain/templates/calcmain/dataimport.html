@@ -1,0 +1,45 @@
+{% extends 'calcmain/base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+
+<div class="container">
+
+    <div class="title text-center">
+        <h1 class="title title-introduction">Data import</h1>
+    </div>
+
+    <div class="div-alignleft div-centered">
+        <form method="POST" class="post-form", enctype="multipart/form-data">
+        {% csrf_token %}
+            {{ form.non_field_errors }}
+
+            <div class="form-group">
+            <label for="{{ form.study_name.id_for_label }}">Study Name</label>
+            <input type="text" class="form-control" id="{{ form.study_name.id_for_label }}" name="{{ form.study_name.html_name}}" placeholder="Please insert the study name.">
+            {{ form.study_name.errors }}
+            </div>
+
+            <div class="form-group">
+            <label for="{{ form.imported_sheet.id_for_label }}">Import your excel file(xls, xlsx)</label>
+            <p class="help-block">Upload an excel file with a single sheet. (.xls &amp; .xlsx files only,
+            <a href="https://goo.gl/R6EmTF">click to download the example file.</a>
+            )</p>
+            <input type="file" id="{{ form.imported_sheet.id_for_label }}" name="{{ form.imported_sheet.html_name}}">
+            {{ form.imported_sheet.errors }}
+            </div>
+
+            <div class="form-group">
+            <label for="{{ form.up_patients.id_for_label }}">Number of enrolled patients having unequivocal progression</label>
+            <input type="text" class="form-control" id="{{ form.up_patients.id_for_label }}" name="{{ form.up_patients.html_name}}" placeholder="Please insert a number">
+            {{ form.up_patients.errors }}
+            </div>
+
+            <button type="submit" class="btn btn-lg btn-info btn-confirm btn">Confirm</button>
+
+        </form>
+    </div>
+
+</div>
+
+{% endblock %}

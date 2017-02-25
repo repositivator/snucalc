@@ -1,0 +1,57 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Measurement variability calculator (RECIST 1.1)</title>
+
+    <!-- Import Google Fonts -->
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600" rel="stylesheet">
+
+    <!-- Import Bootstrap css files -->
+    <link href="{% static 'calcmain/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'calcmain/css/bootstrap-theme.min.css' %}" rel="stylesheet">
+
+    <!-- Import Custom css files -->
+    <link href="{% static 'calcmain/css/style.css' %}" rel="stylesheet">
+    <!-- <link href="{% static 'calcmain/css/materialize.css' %}" rel="stylesheet"> -->
+</head>
+
+
+<body>
+
+<!-- Fixed navbar -->
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/" style="font-weight: 600;">Measurement variability calculator (RECIST 1.1)</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+
+{% block content %}
+{% endblock %}
+
+
+<footer class="footer">
+    <div class="container">
+        <p class="text-muted">Measurement variability calculator (RECIST 1.1)</p>
+    </div>
+</footer>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="{% static 'calcmain/js/bootstrap.min.js' %}"></script>
+    <!-- <script src="{% static 'calcmain/js/materialize.js' %}"></script> -->
+</body>
+
+
+</html>
