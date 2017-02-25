@@ -6,19 +6,34 @@
 <div class="container">
 
     <div class="title text-center">
-        <h1 class="title title-introduction">Submitted</h1>
+        <h1 class="title title-introduction">Confirm the data</h1>
 
+        <table class="table table-hover table-main">
+            <tr>
+                <td>Study name</td>
+                <td><b>{{ study.study_name }}</b></td>
+            <tr>
+            <tr>
+                <td>Treatment name</td>
+                <td><b>{{ study.treatment_name }}</b></td>
+            <tr>
+            <tr>
+                <td>Number of patients in imported data (A)</td>
+                <td><b>{{ num_patients_imported }}</b></td>
+            <tr>
+            <tr>
+                <td>Number of enrolled patients <br>having unequivocal progression (B)</td>
+                <td><b>{{ study.up_patients }}</b></td>
+            <tr>
+            <tr>
+                <td>Number of <b>enrolled</b> patients (A+B)</td>
+                <td><b>{{ num_all_patients }}</b></td>
+            <tr>
+        </table>
 
+        <a class="btn btn-lg btn-default btn-main btn" href="{% url 'calcmain:dataimport' %}" role="button">Re-import data</a>
+        <a class="btn btn-lg btn-info btn-main btn" href="{% url 'calcmain:data_process' pk=study.pk %}" role="button">Confirm</a>
 
-
-        <div class="well well-intro div-centered">
-            In oncology trial, the important outcomes for treatment effect are response rate and progression free survival which are evaluated based on <b>RECIST (Response Evaluation Criteria In Solid Tumors)</b>
-        </div>
-        <div class="well well-intro div-centered">
-            This application calculates the distribution of proportion of patients who were diagnosed with partial <b>response (or progression) </b>when same radiologist or other radiologists re-measure all CT scans.
-        </div>
-
-        <a class="btn btn-lg btn-info btn-main btn" href="{% url 'calcmain:introduction' %}" role="button">START</a>
     </div>
 
 </div>

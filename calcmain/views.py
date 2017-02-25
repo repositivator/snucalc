@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
 from .forms import SheetUploadForm
 from .models import StudyAnalysis
+import pandas as pd
 
 
 def mainpage(request):
@@ -29,6 +30,39 @@ def dataimport(request):
 
 def data_confirm(request, pk):
     study = get_object_or_404(StudyAnalysis, pk=pk)
-    # calculating 필요
-    context = {"study": study}
+    study_id = study.pk
+    study_name = study.study_name
+    treatment_name = study.treatment_name
+    imported_sheet = study.imported_sheet
+    up_patients = study.up_patients
+
+    main_df = pd.read_excel(study.imported_sheet, sheetname=0)
+    num_patients_imported = len(main_df.ID.unique())
+    num_all_patients = num_patients_imported + up_patients
+
+    context = {
+        "study": study,
+        "num_patients_imported": num_patients_imported,
+        "num_all_patients": num_all_patients
+    }
+    return render(request, "calcmain/data_confirm.html", context)
+
+
+def data_process(request, pk):
+    study = get_object_or_404(StudyAnalysis, pk=pk)
+    study_id = study.pk
+    study_name = study.study_name
+    treatment_name = study.treatment_name
+    imported_sheet = study.imported_sheet
+    up_patients = study.up_patients
+
+    main_df = pd.read_excel(study.imported_sheet, sheetname=0)
+    num_patients_imported = len(main_df.ID.unique())
+    num_all_patients = num_patients_imported + up_patients
+
+    context = {
+        "study": study,
+        "num_patients_imported": num_patients_imported,
+        "num_all_patients": num_all_patients
+    }
     return render(request, "calcmain/data_confirm.html", context)

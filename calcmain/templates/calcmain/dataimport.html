@@ -15,24 +15,30 @@
             {{ form.non_field_errors }}
 
             <div class="form-group">
-            <label for="{{ form.study_name.id_for_label }}">Study Name</label>
-            <input type="text" class="form-control" id="{{ form.study_name.id_for_label }}" name="{{ form.study_name.html_name}}" placeholder="Please insert the study name.">
-            {{ form.study_name.errors }}
+                <label for="{{ form.imported_sheet.id_for_label }}">Import your excel file(xls, xlsx)</label>
+                <p class="help-block">Upload an excel file with a single sheet. (.xls &amp; .xlsx files only,
+                <a href="https://goo.gl/R6EmTF">click to download the example file.</a>)</p>
+                <p class="help-block help-block-sub">Column names should be <b>[ ID, Organ, Lesion size at baseline (mm), Lesion size at post-treatment (mm) ]</b>.</p>
+                <input type="file" id="{{ form.imported_sheet.id_for_label }}" name="{{ form.imported_sheet.html_name}}">
+                {{ form.imported_sheet.errors }}
+            </div>
+
+            <div class="form-group" style="width: 45%; float: left;">
+                <label for="{{ form.study_name.id_for_label }}">Study Name</label>
+                <input type="text" class="form-control" id="{{ form.study_name.id_for_label }}" name="{{ form.study_name.html_name}}" placeholder="Please insert the study name.">
+                {{ form.study_name.errors }}
+            </div>
+
+            <div class="form-group" style="width: 45%; float: right;">
+                <label for="{{ form.treatment_name.id_for_label }}">Treatment name</label>
+                <input type="text" class="form-control" id="{{ form.treatment_name.id_for_label }}" name="{{ form.treatment_name.html_name}}" placeholder="Please insert the treatment name.">
+                {{ form.treatment_name.errors }}
             </div>
 
             <div class="form-group">
-            <label for="{{ form.imported_sheet.id_for_label }}">Import your excel file(xls, xlsx)</label>
-            <p class="help-block">Upload an excel file with a single sheet. (.xls &amp; .xlsx files only,
-            <a href="https://goo.gl/R6EmTF">click to download the example file.</a>
-            )</p>
-            <input type="file" id="{{ form.imported_sheet.id_for_label }}" name="{{ form.imported_sheet.html_name}}">
-            {{ form.imported_sheet.errors }}
-            </div>
-
-            <div class="form-group">
-            <label for="{{ form.up_patients.id_for_label }}">Number of enrolled patients having unequivocal progression</label>
-            <input type="text" class="form-control" id="{{ form.up_patients.id_for_label }}" name="{{ form.up_patients.html_name}}" placeholder="Please insert a number">
-            {{ form.up_patients.errors }}
+                <label for="{{ form.up_patients.id_for_label }}">Number of enrolled patients having unequivocal progression</label>
+                <input type="text" class="form-control" id="{{ form.up_patients.id_for_label }}" name="{{ form.up_patients.html_name}}" placeholder="Please insert a number">
+                {{ form.up_patients.errors }}
             </div>
 
             <button type="submit" class="btn btn-lg btn-info btn-confirm btn">Confirm</button>

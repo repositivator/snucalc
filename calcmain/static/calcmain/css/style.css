@@ -11,11 +11,10 @@ body {
     background-image: url("../images/background_main.jpg");
     background-size: cover;
     margin-bottom: 40px;
-
-    /*min-height:100%;*/
-    /*position:relative;*/
-    /*padding-bottom:[footer-height]*/
 }
+
+
+/*Document-related elements*/
 
 .title {
     color: white !important;
@@ -32,10 +31,36 @@ body {
     color: white;
     top: 2px;
 }
+.glyph-main {
+    color: #737373;
+    font-size: 0.9em;
+    padding-right: 1em;
+}
+
+.contact_info {
+    margin-top: 5%;
+    text-align: left;
+    margin-left: 43.5%;
+    padding-left: 1%;
+    border-left: 3px solid #2FADD4;
+}
+.contact_info_sub{
+    margin-top: 0px;
+    margin-left: 43.5%;
+    padding-top: 0px;
+    padding-left: 1%;
+    text-align: left;
+    border-left: 3px solid #2FADD4;
+}
 
 .text-muted {
     margin-top: 10px;
 }
+
+.help-block-sub {
+    margin-top: -0.7em
+}
+
 
 a {
     color: #FF5252;
@@ -64,13 +89,6 @@ input[type=file] {
     text-align: right;
 }
 
-.help-block {
-    /*color: white !important;*/
-    /*font-size: 2em;*/
-}
-
-
-
 .btn-info {
     border-color: none;
 }
@@ -89,9 +107,23 @@ input[type=file] {
     left:37%;
 }
 
+.table-main{
+    margin: 0 auto;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    width: 60%;
+    color: black;
+}
+td {
+    vertical-align: middle !important;
+}
+.table-hover>tbody>tr:hover {
+    background-color: white;
+}
 
 
-/* structure */
+
+/* Structure-related elements */
 
 .div-centered {
     float: none;
