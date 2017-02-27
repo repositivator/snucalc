@@ -7,7 +7,7 @@ import re
 import math
 import pandas as pd
 import numpy as np
-from bokeh.charts import Bar, defaults  # output_file, show
+from bokeh.charts import Bar  # defaults, output_file, show
 from bokeh.models import Range1d
 from bokeh.embed import components
 
