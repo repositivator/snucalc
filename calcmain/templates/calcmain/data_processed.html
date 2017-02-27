@@ -1,0 +1,20 @@
+{% extends 'calcmain/base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+
+<div class="container">
+
+    <div class="title text-center">
+        <h1 class="title title-introduction">Processing the data</h1>
+
+        {{data | safe}}
+
+        <a class="btn btn-lg btn-default btn-processed" href="{% url 'calcmain:dataimport' %}" role="button">Re-import data</a>
+        <a class="btn btn-lg btn-info btn-processed" href="{% url 'calcmain:data_summary' pk=study.pk %}" role="button">Confirm</a>
+
+    </div>
+
+</div>
+
+{% endblock %}

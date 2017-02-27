@@ -12,23 +12,23 @@
             <tr>
                 <td>Study name</td>
                 <td><b>{{ study.study_name }}</b></td>
-            <tr>
+            </tr>
             <tr>
                 <td>Treatment name</td>
                 <td><b>{{ study.treatment_name }}</b></td>
-            <tr>
+            </tr>
             <tr>
                 <td>Number of patients in imported data (A)</td>
                 <td><b>{{ num_patients_imported }}</b></td>
-            <tr>
+            </tr>
             <tr>
                 <td>Number of enrolled patients <br>having unequivocal progression (B)</td>
                 <td><b>{{ study.up_patients }}</b></td>
-            <tr>
+            </tr>
             <tr>
                 <td>Number of <b>enrolled</b> patients (A+B)</td>
                 <td><b>{{ num_all_patients }}</b></td>
-            <tr>
+            </tr>
         </table>
 
         <a class="btn btn-lg btn-default btn-main btn" href="{% url 'calcmain:dataimport' %}" role="button">Re-import data</a>

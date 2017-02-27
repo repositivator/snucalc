@@ -61,10 +61,13 @@ body {
     margin-top: -0.7em
 }
 
-
 a {
     color: #FF5252;
 }
+
+
+
+/*Form-related elements*/
 
 label {
     color: white !important;
@@ -80,6 +83,12 @@ input[type=file] {
 
 .form-group {
     margin-bottom: 7%;
+}
+.select-summary {
+    padding-top: 4%;
+    padding-bottom: 6%;
+    width: 65%;
+    margin: 0 auto;
 }
 
 .errorlist > li {
@@ -106,6 +115,28 @@ input[type=file] {
     position:relative;
     left:37%;
 }
+.btn-processed {
+    margin-bottom: 5%;
+    margin-top: 5%;
+    padding-left: 50px;
+    padding-right:50px;
+}
+
+
+
+/*Table-related elements*/
+
+th {
+    text-align: center;
+    background-color: #39B2D6;
+    color: white;
+}
+td {
+    vertical-align: middle !important;
+}
+.table-hover>tbody>tr:hover {
+    background-color: white;
+}
 
 .table-main{
     margin: 0 auto;
@@ -114,11 +145,33 @@ input[type=file] {
     width: 60%;
     color: black;
 }
-td {
-    vertical-align: middle !important;
+
+.table-summary{
+    margin: 0 auto;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    width: 80%;
+    color: black;
 }
-.table-hover>tbody>tr:hover {
-    background-color: white;
+.table-summary>tbody>tr>td, .table-summary>tbody>tr>th, .table-summary>tfoot>tr>td, .table-summary>tfoot>tr>th, .table-summary>thead>tr>td, .table-summary>thead>tr>th {
+    padding: 8px;
+    line-height: 1.42857143;
+    vertical-align: top;
+    border: none;
+    text-align: left;
+}
+
+.table-processed{
+    margin: 0 auto;
+    width: 55%;
+    color: black;
+    border: 2px solid #ddd;;
+}
+.table-processed>tbody>tr>td, .table-processed>tbody>tr>th, .table-processed>tfoot>tr>td, .table-processed>tfoot>tr>th, .table-processed>thead>tr>td, .table-processed>thead>tr>th {
+    padding: 4px;
+}
+.table-processed>tbody>tr>td:nth-child(1), .table-processed>tbody>tr>td:nth-child(4) {
+    font-weight: bold;
 }
 
 
@@ -137,11 +190,34 @@ td {
     margin-bottom: 20px;
 }
 
+.div-aligncenter {
+    text-align: center;
+    width:60%;
+    margin: 0 auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
 .well-intro {
     color:black;
     width:60%;
+    margin: 0 auto;
     margin-top: 20px;
     margin-bottom: 20px;
+}
+.well-outro {
+    color: white;
+    font-size: 1.5em;
+    width:60%;
+    margin: 0 auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background-image: linear-gradient(to bottom,#1BB3C8 0,#51DAD0 100%);
+    border: none;
+}
+
+.bk-plot-layout {
+    margin: 0 auto;
 }
 
 .jumbotron {

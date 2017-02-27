@@ -1,0 +1,22 @@
+{% extends 'calcmain/base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+
+<div class="container">
+
+    <div class="title text-center">
+        <h1 class="title title-introduction">Reassessment results</h1>
+    </div>
+
+    <div class="div-aligncenter div-centered">
+<!--
+        {{ script | safe }}
+        {{ div | safe }} -->
+
+        <a class="btn btn-lg btn-info btn-processed" href="{% url 'calcmain:final_result' pk=study.pk%}" role="button">Confirm</a>
+    </div>
+</div>
+
+{% endblock %}
+
