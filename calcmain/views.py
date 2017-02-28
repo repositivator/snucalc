@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
-# from django.http import HttpResponse
 from django.utils import timezone
+from django.conf import settings
 from .forms import SheetUploadForm
 from .models import StudyAnalysis
+import os
 import re
 import math
 import pandas as pd
@@ -142,8 +143,62 @@ def data_summary(request, pk):
     return render(request, "calcmain/data_summary.html", context)
 
 
+# Calculate the intra-observer measurement error
 def data_reassessment1(request, pk):
     study = get_object_or_404(StudyAnalysis, pk=pk)
+
+    # 1-1) Load probability excel files
+    PR_Multiple = pd.read_excel(os.path.join(settings.STATIC_URL, 'calcmain/excel_files/Intra_PR_Multiple.xlsx'), sheetname=0)
+    PR_Singular = pd.read_excel(os.path.join(settings.STATIC_URL, 'calcmain/excel_files/Intra_PR_Singular.xlsx'), sheetname=0)
+    Pro_Multiple = pd.read_excel(os.path.join(settings.STATIC_URL, 'calcmain/excel_files/Intra_Pro_Multiple.xlsx'), sheetname=0)
+    Pro_Singular = pd.read_excel(os.path.join(settings.STATIC_URL, 'calcmain/excel_files/Intra_Pro_Singular.xlsx'), sheetname=0)
+
+    # 1-2) Change the index of probability dataframe
+    def change_index(pd_input):
+        pd_input.loc[:, 'PercentChange'] = np.round(pd_input.loc[:, 'PercentChange'])
+        pd_input.loc[:, 'PercentChange'] = pd_input.loc[:, 'PercentChange'].astype(int)
+        pd_input = pd_input.set_index(['PercentChange'])
+        return pd_input
+    PR_Multiple = change_index(PR_Multiple)
+    PR_Singular = change_index(PR_Singular)
+    Pro_Multiple = change_index(Pro_Multiple)
+    Pro_Singular = change_index(Pro_Singular)
+
+    # 2-1) Prepare the new dataframe about reassessment result (PartialResponse, Progression)
+    processed_df = study.processed_df[['Patient ID', 'Number of solid tumor', 'Number of lymph node', 'Lesion size at the baseline (mm)', 'Percent change (%)']]
+    processed_df.columns = ['ID', 'NS', 'NL', 'LS', 'PC']
+
+    processed_df.loc[:, 'NS'] = processed_df.loc[:, 'NS'].astype(str)
+    processed_df.loc[:, 'NL'] = processed_df.loc[:, 'NL'].astype(str)
+    processed_df.loc[:, 'LS'] = processed_df.loc[:, 'LS'].astype(str)
+
+    # 2-2) Setting the serial number to each record
+    for record in range(len(processed_df.index)):
+        if processed_df.loc[record, 'LS'] != 'nan':
+            processed_df.loc[record, 'old_status'] = processed_df.loc[record, 'NS'] + processed_df.loc[record, 'NL'] + str(int(float(processed_df.loc[record, 'LS'])))
+        else:
+            processed_df.loc[record, 'old_status'] = processed_df.loc[record, 'NS'] + processed_df.loc[record, 'NL']
+
+    # 2-3) Making [percent change] exceeding 100 to 100
+    for record in range(len(processed_df.index)):
+        if processed_df.loc[record, 'PC'] > 100:
+            processed_df.loc[record, 'PC'] = 100
+
+    # 2-4) Delete [# of Solid tumor & Lymph node] columns and make new columns
+    processed_df = processed_df.drop(processed_df.columns[[1, 2]], axis=1)
+    processed_df.loc[:, 'new_PR'] = processed_df.loc[:, 'new_PRO'] = 0
+
+    # 3) Match the records' serial numbers to the probability-df's data
+    for record in range(len(processed_df.index)):
+        if processed_df.loc[record, 'LS'] == 'nan':  # multiple
+            processed_df.loc[record, 'new_PR'] = PR_Multiple.loc[processed_df.loc[record, 'PC'], processed_df.loc[record, 'old_status']]
+            processed_df.loc[record, 'new_PRO'] = Pro_Multiple.loc[processed_df.loc[record, 'PC'], processed_df.loc[record, 'old_status']]
+        else:  # singular
+            processed_df.loc[record, 'new_PR'] = PR_Singular.loc[processed_df.loc[record, 'PC'], processed_df.loc[record, 'old_status']]
+            processed_df.loc[record, 'new_PRO'] = Pro_Singular.loc[processed_df.loc[record, 'PC'], processed_df.loc[record, 'old_status']]
+
+
+
     print("assess 1")
     context = {
         "study": study
@@ -151,6 +206,7 @@ def data_reassessment1(request, pk):
     return render(request, "calcmain/reassessment_result.html", context)
 
 
+# Calculate the inter-observer measurement error
 def data_reassessment2(request, pk):
     study = get_object_or_404(StudyAnalysis, pk=pk)
     print("assess 2")
