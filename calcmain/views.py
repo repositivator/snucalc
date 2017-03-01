@@ -1,9 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
-from django.conf import settings
 from .forms import SheetUploadForm
-from .models import StudyAnalysis
-import os
+from .models import StudyAnalysis, ProbExcelSheets
 import re
 import math
 import pandas as pd
@@ -148,10 +146,14 @@ def data_reassessment1(request, pk):
     study = get_object_or_404(StudyAnalysis, pk=pk)
 
     # 1-1) Load probability excel files
-    PR_Multiple = pd.read_excel(os.path.join(settings.STATIC_URL, 'calcmain/excel_files/Intra_PR_Multiple.xlsx'), sheetname=0)
-    PR_Singular = pd.read_excel(os.path.join(settings.STATIC_URL, 'calcmain/excel_files/Intra_PR_Singular.xlsx'), sheetname=0)
-    Pro_Multiple = pd.read_excel(os.path.join(settings.STATIC_URL, 'calcmain/excel_files/Intra_Pro_Multiple.xlsx'), sheetname=0)
-    Pro_Singular = pd.read_excel(os.path.join(settings.STATIC_URL, 'calcmain/excel_files/Intra_Pro_Singular.xlsx'), sheetname=0)
+    Intra_PR_Multiple = get_object_or_404(ProbExcelSheets, sheets_name="Intra_PR_Multiple")
+    Intra_PR_Singular = get_object_or_404(ProbExcelSheets, sheets_name="Intra_PR_Singular")
+    Intra_Pro_Multiple = get_object_or_404(ProbExcelSheets, sheets_name="Intra_Pro_Multiple")
+    Intra_Pro_Singular = get_object_or_404(ProbExcelSheets, sheets_name="Intra_Pro_Singular")
+    PR_Multiple = pd.read_excel(Intra_PR_Multiple.imported_sheet, sheetname=0)
+    PR_Singular = pd.read_excel(Intra_PR_Singular.imported_sheet, sheetname=0)
+    Pro_Multiple = pd.read_excel(Intra_Pro_Multiple.imported_sheet, sheetname=0)
+    Pro_Singular = pd.read_excel(Intra_Pro_Singular.imported_sheet, sheetname=0)
 
     # 1-2) Change the index of probability dataframe
     def change_index(pd_input):
@@ -197,11 +199,43 @@ def data_reassessment1(request, pk):
             processed_df.loc[record, 'new_PR'] = PR_Singular.loc[processed_df.loc[record, 'PC'], processed_df.loc[record, 'old_status']]
             processed_df.loc[record, 'new_PRO'] = Pro_Singular.loc[processed_df.loc[record, 'PC'], processed_df.loc[record, 'old_status']]
 
+    # 4) Save the new dataframe
+    study.reassessed_df = processed_df
+    study.save()
 
+    # 5) Draw a plot for visualizing patients' diagnosis results.
+    new_data = {'Index': [i + 1 for i in range(len(processed_df.index))],
+               'Probability of PR (%)': sorted(processed_df.loc[:, "new_PR"], reverse=False)}
+    sorted_df = pd.DataFrame(new_data)
+    sorted_plot = Bar(sorted_df, values='Probability of PR (%)', color="Blue", title='Probability of PR', legend=None, ylabel="")
+    sorted_plot.y_range = Range1d(0, 1)
+    sorted_plot.xaxis.visible = False
+    sorted_plot.title.text_font = "Roboto Slab"
+    sorted_plot.background_fill_alpha = 0
+    sorted_plot.border_fill_color = None
+    sorted_plot.width = 600    # default : 600
+    sorted_plot.height = 250    # default : 600
+    script_PR, div_PR = components(sorted_plot)
 
-    print("assess 1")
+    new_data = {'Index': [i + 1 for i in range(len(processed_df.index))],
+               'Probability of Pro (%)': sorted(processed_df.loc[:, "new_PRO"], reverse=True)}
+    sorted_df = pd.DataFrame(new_data)
+    sorted_plot = Bar(sorted_df, values='Probability of Pro (%)', color="Red", title='Probability of Pro', legend=None, ylabel="")
+    sorted_plot.y_range = Range1d(0, 1)
+    sorted_plot.xaxis.visible = False
+    sorted_plot.title.text_font = "Roboto Slab"
+    sorted_plot.background_fill_alpha = 0
+    sorted_plot.border_fill_color = None
+    sorted_plot.width = 600    # default : 600
+    sorted_plot.height = 250    # default : 600
+    script_Pro, div_Pro = components(sorted_plot)
+
     context = {
-        "study": study
+        "study": study,
+        "script_PR": script_PR,
+        "div_PR": div_PR,
+        "script_Pro": script_Pro,
+        "div_Pro": div_Pro
     }
     return render(request, "calcmain/reassessment_result.html", context)
 
@@ -209,6 +243,12 @@ def data_reassessment1(request, pk):
 # Calculate the inter-observer measurement error
 def data_reassessment2(request, pk):
     study = get_object_or_404(StudyAnalysis, pk=pk)
+
+    Inter_PR_Multiple = get_object_or_404(ProbExcelSheets, sheets_name="Inter_PR_Multiple")
+    Inter_PR_Singular = get_object_or_404(ProbExcelSheets, sheets_name="Inter_PR_Singular")
+    Inter_Pro_Multiple = get_object_or_404(ProbExcelSheets, sheets_name="Inter_Pro_Multiple")
+    Inter_Pro_Singular = get_object_or_404(ProbExcelSheets, sheets_name="Inter_Pro_Singular")
+
     print("assess 2")
     context = {
         "study": study

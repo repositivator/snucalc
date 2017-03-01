@@ -10,9 +10,12 @@
     </div>
 
     <div class="div-aligncenter div-centered">
-<!--
-        {{ script | safe }}
-        {{ div | safe }} -->
+
+        {{ script_PR | safe }}
+        {{ div_PR | safe }}
+
+        {{ script_Pro | safe }}
+        {{ div_Pro | safe }}
 
         <a class="btn btn-lg btn-info btn-processed" href="{% url 'calcmain:final_result' pk=study.pk%}" role="button">Confirm</a>
     </div>
