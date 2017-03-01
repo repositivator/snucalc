@@ -262,26 +262,81 @@ td {
 }
 
 
+
+/* The Overlay Slide Menu */
 /*
-.card {
-    margin: 2rem auto;
+.navbar-overlay {
+    font-weight: 600 !important;
+    margin-left: 50% !important;
+    cursor:pointer !important;
 }
-
-.image {
+.overlay {
+    height: 0%;
     width: 100%;
-    height: 250px;
-    padding-bottom: 50%;
-    transition: 0.1s linear;
-    background-image: url(http://www.freeallimages.com/wp-content/
-    uploads/2014/09/space-cat-wallpaper-5.jpg);
-    background-size: cover;
-    background-position: center center;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: rgba(0,0,0, 0.9);
+    overflow-y: hidden;
+    transition: 0.5s;
 }
 
-.card-title {
-    margin-bottom: 1rem;
-    font-weight: 900;
+.overlay-content {
+    position: relative;
+    width: 100%;
+    text-align: center;
+    margin-top: 5%;
 }
 
+.overlay a {
+    padding: 8px;
+    text-decoration: none;
+    font-size: 36px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+}
+
+.overlay a:hover, .overlay a:focus {
+    color: #f1f1f1;
+}
+
+.overlay .closebtn {
+    position: absolute;
+    top: 20px;
+    right: 45px;
+    font-size: 60px;
+}
+
+@media screen and (max-height: 450px) {
+  .overlay {overflow-y: auto;}
+  .overlay a {font-size: 20px}
+  .overlay .closebtn {
+    font-size: 40px;
+    top: 15px;
+    right: 35px;
+  }
+}
+
+.email-block {
+    margin-top: -3em;
+    color: whitesmoke;
+}
+.email-content {
+    width: 40%;
+    margin: 0 auto;
+    text-align: right;
+}
+.email-input {
+    width: 40%;
+    float: right;
+    margin-top: 0.2em;
+    margin-right: 30%;
+}
+.btn-email {
+    left: 0;
+    margin-right: 38.5%;
+    margin-top: 2%;
+}
 */
-

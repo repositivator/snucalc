@@ -11,8 +11,10 @@
             document.getElementById("sel-assumption").focus();
         }else if(assumption == 1){
             document.location.href = "{% url 'calcmain:data_reassessment1' pk=study.pk %}";
+            $.LoadingOverlay("show");
         }else if(assumption == 2){
             document.location.href = "{% url 'calcmain:data_reassessment2' pk=study.pk %}";
+            $.LoadingOverlay("show");
         }
     }
 </script>

@@ -18,7 +18,6 @@
     <!-- Import Bootstrap css files -->
     <link href="{% static 'calcmain/css/bootstrap.min.css' %}" rel="stylesheet">
     <link href="{% static 'calcmain/css/bootstrap-theme.min.css' %}" rel="stylesheet">
-    <!-- <link href="{% static 'calcmain/css/materialize.css' %}" rel="stylesheet"> -->
 
     <!-- Import Bokeh css files -->
     <link href="{% static 'calcmain/css/bokeh-0.12.4.min.css' %}" rel="stylesheet">
@@ -33,6 +32,15 @@
     <link rel="icon" type="image/png" sizes="96x96" href="{% static 'calcmain/images/favicon-96x96.png' %}">
     <link rel="icon" type="image/png" sizes="16x16" href="{% static 'calcmain/images/favicon-16x16.png' %}">
 
+    <!-- for ContactUs on navbar -->
+    <!-- <script>
+    function openNav() {
+        document.getElementById("myNav").style.height = "100%";
+    }
+    function closeNav() {
+        document.getElementById("myNav").style.height = "0%";
+    }
+    </script> -->
 </head>
 
 
@@ -41,9 +49,9 @@
 <!-- Fixed navbar -->
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
-        <div class="navbar-header">
+        <div class="navbar-header" style="width: 100%;">
             <a class="navbar-brand" href="/" style="font-weight: 600;">Measurement variability calculator (RECIST 1.1)</a>
-            </div>
+            <!-- <span class="navbar-brand navbar-overlay" onclick="openNav()">&#9776; Contact us</span> -->
         </div>
     </div>
 </nav>
@@ -62,7 +70,48 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="{% static 'calcmain/js/bootstrap.min.js' %}"></script>
     <script src="{% static 'calcmain/js/bokeh-0.12.4.min.js' %}"></script>
-    <!-- <script src="{% static 'calcmain/js/materialize.js' %}"></script> -->
+
+    <!-- JS files for overlay loading animations -->
+    <script src="{% static 'calcmain/js/jquery-3.1.1.min-loading.js' %}"></script>
+    <script src="{% static 'calcmain/js/loadingoverlay.min.js' %}"></script>
+    <script src="{% static 'calcmain/js/loadingoverlay_progress.min.js' %}"></script>
+    <script src="{% static 'calcmain/js/demo-loading.js' %}"></script>
+
 </body>
+
+
+<!-- The overlay contact form using [ https://formspree.io/ ]-->
+<div id="myNav" class="overlay">
+  <!-- Button to close the overlay navigation -->
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  <!-- Overlay content -->
+  <div class="overlay-content div-aligncenter div-centered">
+        <form method="POST"><!-- action="http://formspree.io/example@gmail.com" : 받는 메일주소 지정 -->
+
+          <p class="graph-title">Feel free to ask anything!</p><br>
+          <p class="help-block email-block">Questions &amp; Suggestions are always welcomed.</p><br>
+          <div class="email-content">
+              <label for="name" style="margin-right: 1.5em;">Name</label>
+              <input type="name" name="name" class="styledLabel, form-control, email-input" placeholder="  What's your name?"><br><br>
+
+              <label for="name" style="margin-right: 1.5em;">Email</label>
+              <input type="email" name="email" class="styledLabel, form-control, email-input" placeholder="  Please insert your email address"><br><br>
+              <!-- <input type="text" name="_replyto" placeholder="Your email"/> -->
+
+              <label for="name" style="margin-right: 1.5em;">Message</label>
+              <textarea name="message" class="styledLabel, form-control, email-input" placeholder="  What is your question?"></textarea><br><br><br>
+
+              <!-- <button type="submit">Send</button> id="loading" -->
+              <button type="submit" class="btn btn-lg btn-info btn-confirm btn-email" >Send</button>
+
+              <input type="text" name="_gotcha" style="display:none" />
+              <input type="hidden" name="_subject" value="Question about [Measurement variability calculator]" /> <!-- 메일제목 지정 -->
+              <!-- <input type="hidden" name="_cc" value="another@email.com" /> CC 지정 시 -->
+              <!-- <input type="hidden" name="_format" value="plain" /> 디자인이 없는 이메일로 발송 처리 -->
+              <!-- <input type="hidden" name="_next" value="//site.io/thanks.html" /> 메일발송 완료 페이지 지정 -->
+          </div>
+        </form>
+  </div>
+</div>
 
 </html>

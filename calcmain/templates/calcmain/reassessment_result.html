@@ -22,6 +22,8 @@
 
         <a class="btn btn-lg btn-default btn-processed" href="{% url 'calcmain:data_summary' pk=study.pk %}" role="button">Change assumption</a>
         <a class="btn btn-lg btn-info btn-processed" href="{% url 'calcmain:final_result' pk=study.pk%}" role="button">Confirm</a>
+        <!-- Loading animation : add the id below
+        <a class="btn btn-lg btn-info btn-main btn" id="loading" href="{% url 'calcmain:data_process' pk=study.pk %}" role="button">Confirm</a> -->
 
     </div>
 </div>

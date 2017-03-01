@@ -207,7 +207,7 @@ def data_reassessment1(request, pk):
     new_data = {'Index': [i + 1 for i in range(len(processed_df.index))],
                'Probability of PR (%)': sorted(processed_df.loc[:, "new_PR"], reverse=False)}
     sorted_df = pd.DataFrame(new_data)
-    sorted_plot = Bar(sorted_df, values='Probability of PR (%)', color="Blue", title='Probability of PR', legend=None, ylabel="")
+    sorted_plot = Bar(sorted_df, values='Probability of PR (%)', color="Blue", title='', legend=None, ylabel="")
     sorted_plot.y_range = Range1d(0, 1)
     sorted_plot.xaxis.visible = False
     sorted_plot.title.text_font = "Roboto Slab"
@@ -220,7 +220,7 @@ def data_reassessment1(request, pk):
     new_data = {'Index': [i + 1 for i in range(len(processed_df.index))],
                'Probability of Pro (%)': sorted(processed_df.loc[:, "new_PRO"], reverse=True)}
     sorted_df = pd.DataFrame(new_data)
-    sorted_plot = Bar(sorted_df, values='Probability of Pro (%)', color="Red", title='Probability of Pro', legend=None, ylabel="")
+    sorted_plot = Bar(sorted_df, values='Probability of Pro (%)', color="Red", title='', legend=None, ylabel="")
     sorted_plot.y_range = Range1d(0, 1)
     sorted_plot.xaxis.visible = False
     sorted_plot.title.text_font = "Roboto Slab"
@@ -310,7 +310,7 @@ def data_reassessment2(request, pk):
     new_data = {'Index': [i + 1 for i in range(len(processed_df.index))],
                'Probability of PR (%)': sorted(processed_df.loc[:, "new_PR"], reverse=False)}
     sorted_df = pd.DataFrame(new_data)
-    sorted_plot = Bar(sorted_df, values='Probability of PR (%)', color="Blue", title='Probability of PR', legend=None, ylabel="")
+    sorted_plot = Bar(sorted_df, values='Probability of PR (%)', color="Blue", title='', legend=None, ylabel="")
     sorted_plot.y_range = Range1d(0, 1)
     sorted_plot.xaxis.visible = False
     sorted_plot.title.text_font = "Roboto Slab"
@@ -323,7 +323,7 @@ def data_reassessment2(request, pk):
     new_data = {'Index': [i + 1 for i in range(len(processed_df.index))],
                'Probability of Pro (%)': sorted(processed_df.loc[:, "new_PRO"], reverse=True)}
     sorted_df = pd.DataFrame(new_data)
-    sorted_plot = Bar(sorted_df, values='Probability of Pro (%)', color="Red", title='Probability of Pro', legend=None, ylabel="")
+    sorted_plot = Bar(sorted_df, values='Probability of Pro (%)', color="Red", title='', legend=None, ylabel="")
     sorted_plot.y_range = Range1d(0, 1)
     sorted_plot.xaxis.visible = False
     sorted_plot.title.text_font = "Roboto Slab"

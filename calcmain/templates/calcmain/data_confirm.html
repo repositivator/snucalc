@@ -10,29 +10,30 @@
 
         <table class="table table-hover table-main">
             <tr>
-                <td>Study name</td>
+                <td style="width: 55%;">Study name</td>
                 <td><b>{{ study.study_name }}</b></td>
             </tr>
             <tr>
-                <td>Treatment name</td>
+                <td style="width: 55%;">Treatment name</td>
                 <td><b>{{ study.treatment_name }}</b></td>
             </tr>
             <tr>
-                <td>Number of patients in imported data (A)</td>
+                <td style="width: 55%;">Number of patients in imported data (A)</td>
                 <td><b>{{ num_patients_imported }}</b></td>
             </tr>
             <tr>
-                <td>Number of enrolled patients <br>having unequivocal progression (B)</td>
+                <td style="width: 55%;">Number of enrolled patients <br>having unequivocal progression (B)</td>
                 <td><b>{{ study.up_patients }}</b></td>
             </tr>
             <tr>
-                <td>Number of <b>enrolled</b> patients (A+B)</td>
+                <td style="width: 55%;">Number of <b>enrolled</b> patients (A+B)</td>
                 <td><b>{{ num_all_patients }}</b></td>
             </tr>
         </table>
 
         <a class="btn btn-lg btn-default btn-main btn" href="{% url 'calcmain:dataimport' %}" role="button">Re-import data</a>
-        <a class="btn btn-lg btn-info btn-main btn" href="{% url 'calcmain:data_process' pk=study.pk %}" role="button">Confirm</a>
+        <a class="btn btn-lg btn-info btn-main btn" id="loading" href="{% url 'calcmain:data_process' pk=study.pk %}" role="button">Confirm</a>
+        <!-- <a class="btn btn-lg btn-info btn-main btn" id="extraprogress1" href="{% url 'calcmain:data_process' pk=study.pk %}" role="button">Confirm2</a> -->
 
     </div>
 

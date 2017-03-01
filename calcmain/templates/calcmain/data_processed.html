@@ -11,7 +11,7 @@
         {{data | safe}}
 
         <a class="btn btn-lg btn-default btn-processed" href="{% url 'calcmain:dataimport' %}" role="button">Re-import data</a>
-        <a class="btn btn-lg btn-info btn-processed" href="{% url 'calcmain:data_summary' pk=study.pk %}" role="button">Confirm</a>
+        <a class="btn btn-lg btn-info btn-processed" id="loading" href="{% url 'calcmain:data_summary' pk=study.pk %}" role="button">Confirm</a>
 
     </div>
 
