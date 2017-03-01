@@ -230,8 +230,13 @@ def data_reassessment1(request, pk):
     sorted_plot.height = 250    # default : 600
     script_Pro, div_Pro = components(sorted_plot)
 
+    assumption_num = "1"
+    radiologist = "Same"
+
     context = {
         "study": study,
+        "assumption_num": assumption_num,
+        "radiologist": radiologist,
         "script_PR": script_PR,
         "div_PR": div_PR,
         "script_Pro": script_Pro,
@@ -248,25 +253,118 @@ def data_reassessment2(request, pk):
     Inter_PR_Singular = get_object_or_404(ProbExcelSheets, sheets_name="Inter_PR_Singular")
     Inter_Pro_Multiple = get_object_or_404(ProbExcelSheets, sheets_name="Inter_Pro_Multiple")
     Inter_Pro_Singular = get_object_or_404(ProbExcelSheets, sheets_name="Inter_Pro_Singular")
+    PR_Multiple = pd.read_excel(Inter_PR_Multiple.imported_sheet, sheetname=0)
+    PR_Singular = pd.read_excel(Inter_PR_Singular.imported_sheet, sheetname=0)
+    Pro_Multiple = pd.read_excel(Inter_Pro_Multiple.imported_sheet, sheetname=0)
+    Pro_Singular = pd.read_excel(Inter_Pro_Singular.imported_sheet, sheetname=0)
 
-    print("assess 2")
+    # 1-2) Change the index of probability dataframe
+    def change_index(pd_input):
+        pd_input.loc[:, 'PercentChange'] = np.round(pd_input.loc[:, 'PercentChange'])
+        pd_input.loc[:, 'PercentChange'] = pd_input.loc[:, 'PercentChange'].astype(int)
+        pd_input = pd_input.set_index(['PercentChange'])
+        return pd_input
+    PR_Multiple = change_index(PR_Multiple)
+    PR_Singular = change_index(PR_Singular)
+    Pro_Multiple = change_index(Pro_Multiple)
+    Pro_Singular = change_index(Pro_Singular)
+
+    # 2-1) Prepare the new dataframe about reassessment result (PartialResponse, Progression)
+    processed_df = study.processed_df[['Patient ID', 'Number of solid tumor', 'Number of lymph node', 'Lesion size at the baseline (mm)', 'Percent change (%)']]
+    processed_df.columns = ['ID', 'NS', 'NL', 'LS', 'PC']
+
+    processed_df.loc[:, 'NS'] = processed_df.loc[:, 'NS'].astype(str)
+    processed_df.loc[:, 'NL'] = processed_df.loc[:, 'NL'].astype(str)
+    processed_df.loc[:, 'LS'] = processed_df.loc[:, 'LS'].astype(str)
+
+    # 2-2) Setting the serial number to each record
+    for record in range(len(processed_df.index)):
+        if processed_df.loc[record, 'LS'] != 'nan':
+            processed_df.loc[record, 'old_status'] = processed_df.loc[record, 'NS'] + processed_df.loc[record, 'NL'] + str(int(float(processed_df.loc[record, 'LS'])))
+        else:
+            processed_df.loc[record, 'old_status'] = processed_df.loc[record, 'NS'] + processed_df.loc[record, 'NL']
+
+    # 2-3) Making [percent change] exceeding 100 to 100
+    for record in range(len(processed_df.index)):
+        if processed_df.loc[record, 'PC'] > 100:
+            processed_df.loc[record, 'PC'] = 100
+
+    # 2-4) Delete [# of Solid tumor & Lymph node] columns and make new columns
+    processed_df = processed_df.drop(processed_df.columns[[1, 2]], axis=1)
+    processed_df.loc[:, 'new_PR'] = processed_df.loc[:, 'new_PRO'] = 0
+
+    # 3) Match the records' serial numbers to the probability-df's data
+    for record in range(len(processed_df.index)):
+        if processed_df.loc[record, 'LS'] == 'nan':  # multiple
+            processed_df.loc[record, 'new_PR'] = PR_Multiple.loc[processed_df.loc[record, 'PC'], processed_df.loc[record, 'old_status']]
+            processed_df.loc[record, 'new_PRO'] = Pro_Multiple.loc[processed_df.loc[record, 'PC'], processed_df.loc[record, 'old_status']]
+        else:  # singular
+            processed_df.loc[record, 'new_PR'] = PR_Singular.loc[processed_df.loc[record, 'PC'], processed_df.loc[record, 'old_status']]
+            processed_df.loc[record, 'new_PRO'] = Pro_Singular.loc[processed_df.loc[record, 'PC'], processed_df.loc[record, 'old_status']]
+
+    # 4) Save the new dataframe
+    study.reassessed_df = processed_df
+    study.save()
+
+    # 5) Draw a plot for visualizing patients' diagnosis results.
+    new_data = {'Index': [i + 1 for i in range(len(processed_df.index))],
+               'Probability of PR (%)': sorted(processed_df.loc[:, "new_PR"], reverse=False)}
+    sorted_df = pd.DataFrame(new_data)
+    sorted_plot = Bar(sorted_df, values='Probability of PR (%)', color="Blue", title='Probability of PR', legend=None, ylabel="")
+    sorted_plot.y_range = Range1d(0, 1)
+    sorted_plot.xaxis.visible = False
+    sorted_plot.title.text_font = "Roboto Slab"
+    sorted_plot.background_fill_alpha = 0
+    sorted_plot.border_fill_color = None
+    sorted_plot.width = 600    # default : 600
+    sorted_plot.height = 250    # default : 600
+    script_PR, div_PR = components(sorted_plot)
+
+    new_data = {'Index': [i + 1 for i in range(len(processed_df.index))],
+               'Probability of Pro (%)': sorted(processed_df.loc[:, "new_PRO"], reverse=True)}
+    sorted_df = pd.DataFrame(new_data)
+    sorted_plot = Bar(sorted_df, values='Probability of Pro (%)', color="Red", title='Probability of Pro', legend=None, ylabel="")
+    sorted_plot.y_range = Range1d(0, 1)
+    sorted_plot.xaxis.visible = False
+    sorted_plot.title.text_font = "Roboto Slab"
+    sorted_plot.background_fill_alpha = 0
+    sorted_plot.border_fill_color = None
+    sorted_plot.width = 600    # default : 600
+    sorted_plot.height = 250    # default : 600
+    script_Pro, div_Pro = components(sorted_plot)
+
+    assumption_num = "2"
+    radiologist = "Other"
+
     context = {
-        "study": study
+        "study": study,
+        "assumption_num": assumption_num,
+        "radiologist": radiologist,
+        "script_PR": script_PR,
+        "div_PR": div_PR,
+        "script_Pro": script_Pro,
+        "div_Pro": div_Pro
     }
     return render(request, "calcmain/reassessment_result.html", context)
 
 
+
+
 def final_result(request, pk):
     study = get_object_or_404(StudyAnalysis, pk=pk)
+    input_df = study.reassessed_df
+
     print("Final result")
     context = {
-        "study": study
+        "study": study,
+        "input_df": input_df
     }
     return render(request, "calcmain/final_result.html", context)
 
 
 def export_delete(request, pk):
     study = get_object_or_404(StudyAnalysis, pk=pk)
+
     print("Export_delete")
     context = {
         "study": study

@@ -26,6 +26,19 @@ body {
     padding-top: 5%;
     padding-bottom: 3%;
 }
+.sub-title {
+    margin-top: -3%;
+    color: whitesmoke;
+}
+.graph-title {
+    color: white;
+    font-size: 1.5em;
+    font-weight: 700;
+    display: inline-block;
+    max-width: 100%;
+    margin-top: 8%;
+    margin-bottom: 3%;
+}
 
 .glyphicon {
     color: white;
@@ -216,6 +229,9 @@ td {
     border: none;
 }
 
+.bk-root {
+    margin-bottom: 2%;
+}
 .bk-plot-layout {
     margin: 0 auto;
 }
