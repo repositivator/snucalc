@@ -3,22 +3,6 @@
 
 {% block content %}
 
-<script language="javascript">
-    function check_assumption(){
-        var assumption = document.getElementById("sel-assumption").value;
-        if(assumption == 0){
-            alert("Please select an assumption.");
-            document.getElementById("sel-assumption").focus();
-        }else if(assumption == 1){
-            document.location.href = "{% url 'calcmain:data_reassessment1' pk=study.pk %}";
-            $.LoadingOverlay("show");
-        }else if(assumption == 2){
-            document.location.href = "{% url 'calcmain:data_reassessment2' pk=study.pk %}";
-            $.LoadingOverlay("show");
-        }
-    }
-</script>
-
 
 <div class="container">
 
@@ -66,9 +50,27 @@
         </div>
 
         <a class="btn btn-lg btn-default btn-processed" href="{% url 'calcmain:dataimport' %}" role="button">Re-import data</a>
-        <button type="submit" class="btn btn-lg btn-info btn-processed" onclick="check_assumption()">Calculate reproducibility of the results</button>
+        <button type="submit" class="btn btn-lg btn-info btn-processed" id="check_assumption">Calculate reproducibility of the results</button>
     </div>
 </div>
+
+
+<script language="javascript">
+    document.getElementById('check_assumption').onclick = function() {
+        var assumption = document.getElementById("sel-assumption").value;
+        if(assumption == 0){
+            alert("Please select an assumption.");
+            document.getElementById("sel-assumption").focus();
+        }else if(assumption == 1){
+            document.location.href = "{% url 'calcmain:data_reassessment1' pk=study.pk %}";
+            $.LoadingOverlay("show");
+        }else if(assumption == 2){
+            document.location.href = "{% url 'calcmain:data_reassessment2' pk=study.pk %}";
+            $.LoadingOverlay("show");
+        }
+    }
+</script>
+
 
 {% endblock %}
 

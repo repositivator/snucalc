@@ -348,8 +348,6 @@ def data_reassessment2(request, pk):
     return render(request, "calcmain/reassessment_result.html", context)
 
 
-
-
 def final_result(request, pk):
     study = get_object_or_404(StudyAnalysis, pk=pk)
     input_df = study.reassessed_df
