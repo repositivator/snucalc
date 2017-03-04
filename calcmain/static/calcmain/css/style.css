@@ -242,6 +242,7 @@ td {
 
 .navbar-default {
     border-color: #028EC3;
+    z-index: 99999;
 }
 
 .footer {
@@ -274,7 +275,7 @@ td {
     height: 0%;
     width: 100%;
     position: fixed;
-    z-index: 1;
+    z-index: 9999;
     top: 0;
     left: 0;
     background-color: rgba(0,0,0, 0.9);
@@ -285,6 +286,7 @@ td {
 .overlay-content {
     position: relative;
     width: 100%;
+    height: 100%;
     text-align: center;
     margin-top: 5%;
 }
@@ -307,6 +309,7 @@ td {
     top: 20px;
     right: 45px;
     font-size: 60px;
+    z-index: 999;
 }
 
 @media screen and (max-height: 450px) {

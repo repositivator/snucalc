@@ -1,0 +1,61 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Import Google Fonts -->
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600" rel="stylesheet">
+
+    <!-- Import Bootstrap css files -->
+    <link href="{% static 'calcmain/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'calcmain/css/bootstrap-theme.min.css' %}" rel="stylesheet">
+
+    <!-- Import Custom css files -->
+    <link href="{% static 'calcmain/css/style.css' %}" rel="stylesheet">
+</head>
+
+
+<body style="background-image: none; background-color: black; overflow:hidden;">
+
+    <div class="overlay-content div-aligncenter div-centered">
+      <form method="POST" action="http://formspree.io/example@gmail.com"><!-- 받는 메일주소 지정 -->
+      {% csrf_token %}
+
+        <p class="graph-title" style="margin-top: 1%">Feel free to ask anything!</p><br>
+        <p class="help-block email-block">Questions &amp; suggestions are always welcomed.</p><br>
+        <div class="email-content">
+            <label for="name" style="margin-right: 1.5em;">Name</label>
+            <input type="name" name="name" class="styledLabel, form-control, email-input" placeholder="  What's your name?"><br><br>
+
+            <label for="name" style="margin-right: 1.5em;">Email</label>
+            <input type="email" name="email" class="styledLabel, form-control, email-input" placeholder="  Please insert your email address"><br><br>
+            <!-- <input type="text" name="_replyto" placeholder="Your email"/> -->
+
+            <label for="name" style="margin-right: 1.5em;">Message</label>
+            <textarea name="message" class="styledLabel, form-control, email-input" placeholder="  What is your question?"></textarea><br><br><br>
+
+            <button type="submit" class="btn btn-lg btn-info btn-confirm btn-email" id="loading">Send</button>
+
+            <input type="text" name="_gotcha" style="display:none" />
+            <input type="hidden" name="_subject" value="Questions about [Measurement variability calculator]" /> <!-- 메일제목 지정 -->
+            <input type="hidden" name="_next" value="{% url 'calcmain:mail_complete' %}" /> <!-- 메일발송 완료 페이지 지정 -->
+            <!-- <input type="hidden" name="_cc" value="another@email.com" /> CC 지정 시 -->
+            <!-- <input type="hidden" name="_format" value="plain" /> 디자인이 없는 이메일로 발송 처리 -->
+        </div>
+      </form>
+    </div>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="{% static 'calcmain/js/bootstrap.min.js' %}"></script>
+
+    <!-- JS files for overlay loading animations -->
+    <script src="{% static 'calcmain/js/jquery-3.1.1.min-loading.js' %}"></script>
+    <script src="{% static 'calcmain/js/loadingoverlay.min.js' %}"></script>
+    <script src="{% static 'calcmain/js/loadingoverlay_progress.min.js' %}"></script>
+    <script src="{% static 'calcmain/js/demo-loading.js' %}"></script>
+
+</body>
+</html>

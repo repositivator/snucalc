@@ -1,0 +1,31 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Import Google Fonts -->
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600" rel="stylesheet">
+
+    <!-- Import Bootstrap css files -->
+    <link href="{% static 'calcmain/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'calcmain/css/bootstrap-theme.min.css' %}" rel="stylesheet">
+
+    <!-- Import Custom css files -->
+    <link href="{% static 'calcmain/css/style.css' %}" rel="stylesheet">
+</head>
+
+
+<body style="background-image: none; background-color: black; overflow:hidden;">
+
+    <div class="overlay-content div-aligncenter div-centered">
+        <p class="graph-title" style="margin-top: 8%">Your feedback is submitted!</p><br>
+        <p class="help-block email-block">Please click "X" on the right top.</p><br>
+        <!-- <p class="help-block">If you have another feedback, please click <a href="{% url 'calcmain:contact_us' %}">here.</a></p><br> -->
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="{% static 'calcmain/js/bootstrap.min.js' %}"></script>
+</body>
+</html>
