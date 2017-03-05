@@ -74,6 +74,13 @@ body {
     margin-top: -0.7em
 }
 
+.graph-quantile {
+    margin-bottom: 0;
+    text-align: right;
+    margin-right: 10%;
+    margin-top: -2%;
+}
+
 a {
     color: #FF5252;
 }

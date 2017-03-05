@@ -6,7 +6,7 @@ import re
 import math
 import pandas as pd
 import numpy as np
-from bokeh.charts import Bar  # defaults, output_file, show
+from bokeh.charts import Bar, Histogram  # defaults, output_file, show
 from bokeh.models import Range1d
 from bokeh.embed import components
 
@@ -352,10 +352,75 @@ def final_result(request, pk):
     study = get_object_or_404(StudyAnalysis, pk=pk)
     input_df = study.reassessed_df
 
-    print("Final result")
+    # 1) Add rows of UP patients.
+    base_index = len(input_df.index)
+    for i in range(study.up_patients):
+        input_df.loc[base_index + i, "new_PR"] = 0
+        input_df.loc[base_index + i, "new_PRO"] = 1
+
+    # 2) Generate 1000 sets of new variables(1or0) following bernoulli distribution.
+    # Key = Patient ID, Value = Bernoulli random variable
+    bernoulli_dict_PR = {}
+    bernoulli_dict_PR0 = {}
+    # Column = Key = Patients' ID, Row = Value = 1000 Bernoulli random variables derived from patients new_PR or new_PRO proportion
+    for record in range(len(input_df.index)):
+        bernoulli_dict_PR[record] = np.random.choice([0, 1], size=(1000,), p=[1-input_df.loc[record, 'new_PR'], input_df.loc[record, 'new_PR']])
+        bernoulli_dict_PR0[record] = np.random.choice([0, 1], size=(1000,), p=[1-input_df.loc[record, 'new_PRO'], input_df.loc[record, 'new_PRO']])
+        # bernoulli_dict_PR[record] = bernoulli.rvs(input_df.loc[record, 'new_PR'], size=1000)
+        # bernoulli_dict_PR0[record] = bernoulli.rvs(input_df.loc[record, 'new_PRO'], size=1000)
+
+    # 3) Make dataframes of variables and calculate each trials' (rows') means.
+    PR_df = pd.DataFrame(bernoulli_dict_PR)
+    PR_df.loc[:, "NewProb(PR)"] = PR_df.sum(axis=1) / len(PR_df.columns)
+    PRO_df = pd.DataFrame(bernoulli_dict_PR0)
+    PRO_df.loc[:, "NewProb(PRO)"] = PRO_df.sum(axis=1) / len(PRO_df.columns)
+
+    # 4) Make new dataframes with calculated means and find quantile numbers
+    new_data = {'Index': [i + 1 for i in range(len(PR_df.index))],
+               'Probability of PR (%)': sorted((PR_df.loc[:, "NewProb(PR)"] * 100).astype(int), reverse=False)}
+    sorted_PR_df = pd.DataFrame(new_data)
+
+    quantile_bottom_pr = sorted_PR_df.loc[25, "Probability of PR (%)"] # 26th
+    quantile_top_pr = sorted_PR_df.loc[974, "Probability of PR (%)"] # 975th
+    quantile_median_pr = int((sorted_PR_df.loc[499, "Probability of PR (%)"] + sorted_PR_df.loc[500, "Probability of PR (%)"]) / 2)
+
+    new_data = {'Index': [i + 1 for i in range(len(PRO_df.index))],
+               'Probability of PRO (%)': sorted((PRO_df.loc[:, "NewProb(PRO)"] * 100).astype(int), reverse=False)}
+    sorted_PRO_df = pd.DataFrame(new_data)
+
+    quantile_bottom_pro = sorted_PRO_df.loc[25, "Probability of PRO (%)"] # 26th
+    quantile_top_pro = sorted_PRO_df.loc[974, "Probability of PRO (%)"] # 975th
+    quantile_median_pro = int((sorted_PRO_df.loc[499, "Probability of PRO (%)"] + sorted_PRO_df.loc[500, "Probability of PRO (%)"]) / 2)
+
+    # 5) Draw histogram plots for visualizing calculation results.
+    pr_plot = Histogram(sorted_PR_df, values='Probability of PR (%)', bins=15, color='blue', title='', ylabel='', xlabel='')
+    pr_plot.title.text_font = "Roboto Slab"
+    pr_plot.background_fill_alpha = 0
+    pr_plot.border_fill_color = None
+    pr_plot.width = 600    # default : 600
+    pr_plot.height = 250    # default : 600
+    script_PR, div_PR = components(pr_plot)
+
+    pro_plot = Histogram(sorted_PRO_df, values='Probability of PRO (%)', bins=15, color='red', title='', ylabel='', xlabel='')
+    pro_plot.title.text_font = "Roboto Slab"
+    pro_plot.background_fill_alpha = 0
+    pro_plot.border_fill_color = None
+    pro_plot.width = 600    # default : 600
+    pro_plot.height = 250    # default : 600
+    script_Pro, div_Pro = components(pro_plot)
+
     context = {
         "study": study,
-        "input_df": input_df
+        "quantile_bottom_pr": quantile_bottom_pr,
+        "quantile_top_pr": quantile_top_pr,
+        "quantile_median_pr": quantile_median_pr,
+        "quantile_bottom_pro": quantile_bottom_pro,
+        "quantile_top_pro": quantile_top_pro,
+        "quantile_median_pro": quantile_median_pro,
+        "script_PR": script_PR,
+        "div_PR": div_PR,
+        "script_Pro": script_Pro,
+        "div_Pro": div_Pro
     }
     return render(request, "calcmain/final_result.html", context)
 
