@@ -25,10 +25,7 @@ Pillow==4.0.0
 psycopg2==2.6.2
 pyexcel==0.4.4
 pyexcel-io==0.3.2
-pyexcel-webio==0.0.10
-pyexcel-xls==0.3.1
-pyexcel-xlsx==0.3.0
-pyexcel-xlsxw==0.3.0
+pyexcel-webio==0.0.11
 python-dateutil==2.6.0
 pytz==2016.10
 PyYAML==3.12
@@ -39,5 +36,3 @@ texttable==0.8.7
 tornado==4.4.2
 traitlets==4.3.2
 xlrd==1.0.0
-XlsxWriter==0.9.3
-xlwt==1.2.0
