@@ -427,9 +427,7 @@ def final_result(request, pk):
 
 def export_delete(request, pk):
     study = get_object_or_404(StudyAnalysis, pk=pk)
+    study.imported_sheet.delete()
+    study.delete()
 
-    print("Export_delete")
-    context = {
-        "study": study
-    }
-    return render(request, "calcmain/deleted.html", context)
+    return render(request, "calcmain/deleted.html", {})
