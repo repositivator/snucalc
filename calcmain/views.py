@@ -166,6 +166,7 @@ def data_reassessment1(request, pk):
         pd_input.loc[:, 'PercentChange'] = np.round(pd_input.loc[:, 'PercentChange'])
         pd_input.loc[:, 'PercentChange'] = pd_input.loc[:, 'PercentChange'].astype(int)
         pd_input = pd_input.set_index(['PercentChange'])
+        pd_input.columns = pd_input.columns.astype(str)
         return pd_input
     PR_Multiple = change_index(PR_Multiple)
     PR_Singular = change_index(PR_Singular)
@@ -269,6 +270,7 @@ def data_reassessment2(request, pk):
         pd_input.loc[:, 'PercentChange'] = np.round(pd_input.loc[:, 'PercentChange'])
         pd_input.loc[:, 'PercentChange'] = pd_input.loc[:, 'PercentChange'].astype(int)
         pd_input = pd_input.set_index(['PercentChange'])
+        pd_input.columns = pd_input.columns.astype(str)
         return pd_input
     PR_Multiple = change_index(PR_Multiple)
     PR_Singular = change_index(PR_Singular)
