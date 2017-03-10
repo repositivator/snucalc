@@ -7,16 +7,16 @@
 
     <div class="title text-center">
         <h1 class="title title-introduction">Reassessment results</h1>
-        <h4 class="sub-title">Assumption {{ assumption_num }}. <b>{{ radiologist }} radiologist</b> re-measure all CT scans.</h4>
+        <h4 class="sub-title">Assumption {{ assumption_num }}. <b>{{ radiologist }} radiologist</b> re-assesses tumor response.</h4>
     </div>
 
     <div class="div-aligncenter div-centered">
 
-        <p class="graph-title">Probability of diagnosis as <span style="font-weight: bold; color: blue;">partial response</span> when reassessments</p>
+        <p class="graph-title">Probability of diagnosis as <span style="font-weight: bold; color: blue;">partial response</span> when re-assessed</p>
         {{ script_PR | safe }}
         {{ div_PR | safe }}
 
-        <p class="graph-title">Probability of diagnosis as <span style="font-weight: bold; color: red;">progression</span> when reassessments</p>
+        <p class="graph-title">Probability of diagnosis as <span style="font-weight: bold; color: red;">progression</span> when re-assessed</p>
         {{ script_Pro | safe }}
         {{ div_Pro | safe }}
 

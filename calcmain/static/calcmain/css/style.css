@@ -153,7 +153,7 @@ input[type=file] {
 .select-summary {
     padding-top: 4%;
     padding-bottom: 6%;
-    width: 65%;
+    width: 70%;
     margin: 0 auto;
 }
 
@@ -216,7 +216,7 @@ td {
     margin: 0 auto;
     margin-top: 5%;
     margin-bottom: 5%;
-    width: 80%;
+    width: 82%;
     color: black;
 }
 .table-summary>tbody>tr>td, .table-summary>tbody>tr>th, .table-summary>tfoot>tr>td, .table-summary>tfoot>tr>th, .table-summary>thead>tr>td, .table-summary>thead>tr>th {
@@ -250,7 +250,7 @@ td {
 }
 
 .div-alignleft {
-    width:60%;
+    width:62%;
     margin: 0 auto;
     margin-top: 20px;
     margin-bottom: 20px;

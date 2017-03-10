@@ -112,7 +112,7 @@ def data_summary(request, pk):
     # Calculate the proportions of patients based on diagnosis results.
     num_partial_response = num_progression = 0
     for id in range(len(processed_df.index)):
-        if processed_df.loc[:, "Percent change (%)"][id] < -30:
+        if processed_df.loc[:, "Percent change (%)"][id] <= -30:
             num_partial_response += 1
         elif processed_df.loc[:, "Percent change (%)"][id] >= 20:
             num_progression += 1
@@ -342,7 +342,7 @@ def data_reassessment2(request, pk):
     script_Pro, div_Pro = components(sorted_plot)
 
     assumption_num = "2"
-    radiologist = "Other"
+    radiologist = "Another"
 
     context = {
         "study": study,

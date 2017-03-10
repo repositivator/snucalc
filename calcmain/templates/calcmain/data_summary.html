@@ -21,11 +21,12 @@
                 <td><b>{{ num_all_patients }}</b></td>
             </tr>
             <tr>
-                <td>Number of enrolled patients <br>having unequivocal progression</td>
+                <td>Number of enrolled patients <br>having unequivocal radiologic progression, <br>symptomatic progression or death</td>
                 <td><b>{{ study.up_patients }}</b></td>
             </tr>
         </table>
 
+        <p class="graph-title" style="margin-top: 0%; margin-bottom: 0%;">Waterfall plot</p>
         {{ script | safe }}
         {{ div | safe }}
 
@@ -35,7 +36,7 @@
                 <td><b>{{ partial_response_prop }}%</b></td>
             </tr>
             <tr>
-                <td>Proportion of patients who were diagnosed with progression<br><b>(percent change > 20%)</b></td>
+                <td>Proportion of patients who were diagnosed with progression<br><b>(percent change ≥ +20%, unequivocal, symptomatic progression  or death)</b></td>
                 <td><b>{{ progression_prop }}%</b></td>
             </tr>
         </table>
@@ -44,8 +45,8 @@
             <label for="sel-assumption">Which results do you want to confirm?</label>
             <select class="form-control" id="sel-assumption" name="sel-assumption" style="font-weight: bold">
                 <option value="0" style="font-weight: bold">Please select an assumption.</option>
-                <option value="1">Assumption 1. Same radiologist re-measure all CT scans.</option>
-                <option value="2">Assumption 2. Other radiologist re-measure all CT scans.</option>
+                <option value="1">Assumption 1. Same radiologist re-assesses tumor response.</option>
+                <option value="2">Assumption 2. Another radiologist re-assesses tumor response.</option>
             </select>
         </div>
 
