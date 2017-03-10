@@ -18,7 +18,7 @@
         {{ script_PR | safe }}
         {{ div_PR | safe }}
         <p class="graph-quantile" style="color: blue;"> 95% quantile: <b>{{ quantile_median_pr }}% [{{ quantile_bottom_pr }}%, {{ quantile_top_pr }}%] </b></p>
-        <p class="graph-quantile" style="color: gray;"> 95% quantile: <b>Median [95% central range] </b></p>
+        <p class="graph-quantile" style="color: darkgray; margin-top: 0;"> 95% quantile: <b>Median [95% central range] </b></p>
 
         <p class="graph-title">
         Distribution of proportion of patients who be diagnosed<br>with <span style="font-weight: bold; color: red;">progression (percent change > 20%)</span>
@@ -26,7 +26,7 @@
         {{ script_Pro | safe }}
         {{ div_Pro | safe }}
         <p class="graph-quantile" style="color: red;"> 95% quantile: <b>{{ quantile_median_pro }}% [{{ quantile_bottom_pro }}%, {{ quantile_top_pro }}%] </b></p>
-        <p class="graph-quantile" style="color: gray;"> 95% quantile: <b>Median [95% central range] </b></p>
+        <p class="graph-quantile" style="color: darkgray; margin-top: 0;"> 95% quantile: <b>Median [95% central range] </b></p>
 
         <a class="btn btn-lg btn-default btn-processed" href="{% url 'calcmain:data_summary' pk=study.pk %}" role="button">Change assumption</a>
         <a class="btn btn-lg btn-info btn-processed" id="loading" href="{% url 'calcmain:export_delete' pk=study.pk%}" role="button">Finish and delete the data</a>
