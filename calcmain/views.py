@@ -58,12 +58,12 @@ def data_process(request, pk):
 
     # Generate a dataframe for processing the data
     process_df = pd.DataFrame({'Patient ID': list(set([int(i) for i in main_df.ID]))})
-    process_df.loc[:,"Number of solid tumor"] = 0
-    process_df.loc[:,"Number of lymph node"] = 0
-    process_df.loc[:,"sum_base"] = 0
-    process_df.loc[:,"sum_post"] = 0
-    process_df.loc[:,"Lesion size at the baseline (mm)"] = np.nan
-    process_df.loc[:,"Percent change (%)"] = 0
+    process_df.loc[:, "Number of solid organ tumor"] = 0
+    process_df.loc[:, "Number of lymph node"] = 0
+    process_df.loc[:, "Tumor burden at the baseline (mm)"] = 0  # Sum of all lesion size at baseline per patient(ID)
+    process_df.loc[:, "Tumor burden at the post-treatment (mm)"] = 0 # Sum of all lesion size at post-treatment per patient(ID)
+    process_df.loc[:, "Lesion size at the baseline (mm)"] = np.nan # For checking patients who have only one lesion (Solid or Lymph)
+    process_df.loc[:, "Percent change (%)"] = 0
 
     # Check records and update cells
     for record in range(len(main_df.index)):
@@ -72,22 +72,22 @@ def data_process(request, pk):
         input_id = record_id - 1
 
         if re.match("lymph*", lesion_name):
-            process_df.loc[input_id,"Number of lymph node"] += 1
+            process_df.loc[input_id, "Number of lymph node"] += 1
         else:
-            process_df.loc[input_id,"Number of solid tumor"] += 1
-        process_df.loc[input_id,"sum_base"] += main_df.iloc[:, 2][record]
-        process_df.loc[input_id,"sum_post"] += main_df.iloc[:, 3][record]
+            process_df.loc[input_id, "Number of solid organ tumor"] += 1
+        process_df.loc[input_id, "Tumor burden at the baseline (mm)"] += main_df.iloc[:, 2][record]
+        process_df.loc[input_id, "Tumor burden at the post-treatment (mm)"] += main_df.iloc[:, 3][record]
 
 
-    process_df.loc[:,"Number of solid tumor"] = process_df.loc[:,"Number of solid tumor"].astype(int)
-    process_df.loc[:,"Number of lymph node"] = process_df.loc[:,"Number of lymph node"].astype(int)
-    process_df.loc[:,"sum_base"] = process_df.loc[:,"sum_base"].astype(int)
-    process_df.loc[:,"sum_post"] = process_df.loc[:,"sum_post"].astype(int)
+    process_df.loc[:, "Number of solid organ tumor"] = process_df.loc[:, "Number of solid organ tumor"].astype(int)
+    process_df.loc[:, "Number of lymph node"] = process_df.loc[:, "Number of lymph node"].astype(int)
+    process_df.loc[:, "Tumor burden at the baseline (mm)"] = process_df.loc[:, "Tumor burden at the baseline (mm)"].astype(int)
+    process_df.loc[:, "Tumor burden at the post-treatment (mm)"] = process_df.loc[:, "Tumor burden at the post-treatment (mm)"].astype(int)
 
     # Check processed dataframe and update cells
     for record in range(len(process_df.index)):
-        process_df.loc[record, 'Percent change (%)'] = math.floor((process_df.loc[record, "sum_post"] - process_df.loc[record, "sum_base"]) / process_df.loc[record, "sum_base"] * 100)
-        if process_df.loc[record, "Number of lymph node"] + process_df.loc[record, "Number of solid tumor"] == 1:
+        process_df.loc[record, 'Percent change (%)'] = math.floor((process_df.loc[record, "Tumor burden at the post-treatment (mm)"] - process_df.loc[record, "Tumor burden at the baseline (mm)"]) / process_df.loc[record, "Tumor burden at the baseline (mm)"] * 100)
+        if process_df.loc[record, "Number of lymph node"] + process_df.loc[record, "Number of solid organ tumor"] == 1:
             process_df.loc[record, "Lesion size at the baseline (mm)"] = int(main_df.loc[main_df['ID'] == record + 1]['Lesion size at baseline (mm)'])
 
     study.processed_df = process_df
@@ -96,7 +96,7 @@ def data_process(request, pk):
     context = {
         "study": study,
         "data": process_df.to_html(
-            columns=['Patient ID', 'Number of solid tumor', 'Number of lymph node', 'Percent change (%)', 'Lesion size at the baseline (mm)'],
+            columns=['Patient ID', 'Number of solid organ tumor', 'Number of lymph node', 'Percent change (%)', 'Tumor burden at the baseline (mm)', 'Tumor burden at the post-treatment (mm)'],
             index=False, na_rep="", bold_rows=True, classes=["table", "table-hover", "table-processed"])
     }
     return render(request, "calcmain/data_processed.html", context)
@@ -174,7 +174,7 @@ def data_reassessment1(request, pk):
     Pro_Singular = change_index(Pro_Singular)
 
     # 2-1) Prepare the new dataframe about reassessment result (PartialResponse, Progression)
-    processed_df = study.processed_df[['Patient ID', 'Number of solid tumor', 'Number of lymph node', 'Lesion size at the baseline (mm)', 'Percent change (%)']]
+    processed_df = study.processed_df[['Patient ID', 'Number of solid organ tumor', 'Number of lymph node', 'Lesion size at the baseline (mm)', 'Percent change (%)']]
     processed_df.columns = ['ID', 'NS', 'NL', 'LS', 'PC']
 
     processed_df.loc[:, 'NS'] = processed_df.loc[:, 'NS'].astype(str)
@@ -278,7 +278,7 @@ def data_reassessment2(request, pk):
     Pro_Singular = change_index(Pro_Singular)
 
     # 2-1) Prepare the new dataframe about reassessment result (PartialResponse, Progression)
-    processed_df = study.processed_df[['Patient ID', 'Number of solid tumor', 'Number of lymph node', 'Lesion size at the baseline (mm)', 'Percent change (%)']]
+    processed_df = study.processed_df[['Patient ID', 'Number of solid organ tumor', 'Number of lymph node', 'Lesion size at the baseline (mm)', 'Percent change (%)']]
     processed_df.columns = ['ID', 'NS', 'NL', 'LS', 'PC']
 
     processed_df.loc[:, 'NS'] = processed_df.loc[:, 'NS'].astype(str)
