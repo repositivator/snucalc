@@ -40,6 +40,52 @@ body {
     margin-bottom: 3%;
 }
 
+.main-subtitle {
+    color: white;
+    font-size: 2em;
+    display: inline-block;
+    max-width: 100%;
+    margin-left: 38.7%;
+    margin-top: 4.5%;
+    margin-bottom: 1%;
+}
+.row-devinfo{
+    width: 80%;
+    margin-left: 9.5%;
+}
+.dev-info{
+    font-size: 1.5em;
+    font-weight: 700;
+}
+.main-releaseTitle{
+    color: white;
+    font-size: 2em;
+    display: inline-block;
+    max-width: 100%;
+    margin-left: 42.5%;
+    margin-top: 2.5%;
+    margin-bottom: 1%;
+}
+.main-programmer{
+    margin-left: 40.5%;
+    margin-top: -1%;
+    margin-bottom: 2%;
+    font-size: 1.3em;
+    color: darkgray;
+}
+.row-releaseInfo{
+    margin-left: 24%;
+    margin-bottom: 5%;
+}
+.release-info{
+    color: #737373;
+    border-left: 2px solid gray;
+    padding-left: 1%;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    display: block;
+}
+
 .glyphicon {
     color: white;
     top: 2px;
@@ -52,10 +98,10 @@ body {
 
 .contact_info {
     margin-top: 5%;
-    text-align: left;
-    margin-left: 43.5%;
-    padding-left: 1%;
-    border-left: 3px solid #2FADD4;
+    text-align: center;
+    /*margin-left: 43.5%;*/
+    padding-left: 3%;
+    /*border-left: 3px solid #2FADD4;*/
 }
 .contact_info_sub{
     margin-top: 0px;
