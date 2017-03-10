@@ -125,7 +125,10 @@ def data_summary(request, pk):
                'Percent change (%)': sorted(processed_df.loc[:, "Percent change (%)"], reverse=True)}
     sorted_df = pd.DataFrame(new_data)
 
-    sorted_plot = Bar(sorted_df, values='Percent change (%)', color="Blue", title='Percent change (%)', legend=None, ylabel="")
+    study.sorted_df = sorted_df
+    study.save()
+
+    sorted_plot = Bar(sorted_df, values='Percent change (%)', color="White", title='Percent change (%)', legend=None, ylabel="")
     sorted_plot.y_range = Range1d(-100, 100)
     sorted_plot.xaxis.visible = False
     sorted_plot.title.text_font = "Roboto Slab"
@@ -237,17 +240,34 @@ def data_reassessment1(request, pk):
     sorted_plot.height = 250    # default : 600
     script_Pro, div_Pro = components(sorted_plot)
 
+    # Summarized data (initial waterfall plot)
+    sorted_df = study.sorted_df
+    sorted_plot = Bar(sorted_df, values='Percent change (%)', color="White", title='Percent change (%)', legend=None, ylabel="")
+    sorted_plot.y_range = Range1d(-100, 100)
+    sorted_plot.xaxis.visible = False
+    sorted_plot.title.text_font = "Roboto Slab"
+    sorted_plot.background_fill_alpha = 0
+    sorted_plot.border_fill_color = None
+    sorted_plot.width = 600    # default : 600
+    sorted_plot.height = 250    # default : 600
+    script_summary, div_summary = components(sorted_plot)
+
     assumption_num = "1"
     radiologist = "Same"
+
+    up_patients = study.up_patients
 
     context = {
         "study": study,
         "assumption_num": assumption_num,
         "radiologist": radiologist,
+        "script_summary": script_summary,
+        "div_summary": div_summary,
         "script_PR": script_PR,
         "div_PR": div_PR,
         "script_Pro": script_Pro,
-        "div_Pro": div_Pro
+        "div_Pro": div_Pro,
+        "up_patients": up_patients
     }
     return render(request, "calcmain/reassessment_result.html", context)
 
@@ -341,17 +361,34 @@ def data_reassessment2(request, pk):
     sorted_plot.height = 250    # default : 600
     script_Pro, div_Pro = components(sorted_plot)
 
+    # Summarized data (initial waterfall plot)
+    sorted_df = study.sorted_df
+    sorted_plot = Bar(sorted_df, values='Percent change (%)', color="White", title='Percent change (%)', legend=None, ylabel="")
+    sorted_plot.y_range = Range1d(-100, 100)
+    sorted_plot.xaxis.visible = False
+    sorted_plot.title.text_font = "Roboto Slab"
+    sorted_plot.background_fill_alpha = 0
+    sorted_plot.border_fill_color = None
+    sorted_plot.width = 600    # default : 600
+    sorted_plot.height = 250    # default : 600
+    script_summary, div_summary = components(sorted_plot)
+
     assumption_num = "2"
     radiologist = "Another"
+
+    up_patients = study.up_patients
 
     context = {
         "study": study,
         "assumption_num": assumption_num,
         "radiologist": radiologist,
+        "script_summary": script_summary,
+        "div_summary": div_summary,
         "script_PR": script_PR,
         "div_PR": div_PR,
         "script_Pro": script_Pro,
-        "div_Pro": div_Pro
+        "div_Pro": div_Pro,
+        "up_patients": up_patients
     }
     return render(request, "calcmain/reassessment_result.html", context)
 

@@ -12,6 +12,10 @@
 
     <div class="div-aligncenter div-centered">
 
+        <p class="graph-title">Original distribution of patients in imported data</p>
+        {{ script_summary | safe }}
+        {{ div_summary | safe }}
+
         <p class="graph-title">Probability of diagnosis as <span style="font-weight: bold; color: blue;">partial response</span> when re-assessed</p>
         {{ script_PR | safe }}
         {{ div_PR | safe }}
@@ -19,6 +23,10 @@
         <p class="graph-title">Probability of diagnosis as <span style="font-weight: bold; color: red;">progression</span> when re-assessed</p>
         {{ script_Pro | safe }}
         {{ div_Pro | safe }}
+
+        <p class="graph-uppatients"><b>n† = {{ up_patients }} (not included above) </b></p>
+        <p class="graph-upmeaning">† numbers of patients having probability 1 for progression at the repetition <br>(unequivocal radiologic progression, symptomatic progression or death)</p>
+
 
         <a class="btn btn-lg btn-default btn-processed" href="{% url 'calcmain:data_summary' pk=study.pk %}" role="button">Change assumption</a>
         <a class="btn btn-lg btn-info btn-processed" id="loading" href="{% url 'calcmain:final_result' pk=study.pk%}" role="button">Confirm</a>

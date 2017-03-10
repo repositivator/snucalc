@@ -9,6 +9,7 @@ class StudyAnalysis(models.Model):
     imported_sheet = models.FileField(upload_to='files/imported_sheets')
     up_patients = models.IntegerField()
     processed_df = PickledObjectField(default="None")
+    sorted_df = PickledObjectField(default="None")
     reassessed_df = PickledObjectField(default="None")
     createdAt = models.DateTimeField(default=timezone.now)
 

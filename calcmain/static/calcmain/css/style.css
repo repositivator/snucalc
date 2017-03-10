@@ -123,8 +123,24 @@ body {
 .graph-quantile {
     margin-bottom: 0;
     text-align: right;
-    margin-right: 10%;
     margin-top: -2%;
+    margin-right: 10%;
+}
+.graph-uppatients {
+    color: red;
+    text-align: left;
+    margin-top: -2%;
+    margin-bottom: 0;
+    margin-left: 11%;
+    margin-right: 10%;
+}
+.graph-upmeaning{
+    color: darkgray;
+    text-align: left;
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: 11%;
+    margin-right: 10%;
 }
 
 a {
