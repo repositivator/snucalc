@@ -438,18 +438,22 @@ def final_result(request, pk):
     quantile_median_pro = int((sorted_PRO_df.loc[499, "Probability of PRO (%)"] + sorted_PRO_df.loc[500, "Probability of PRO (%)"]) / 2)
 
     # 5) Draw histogram plots for visualizing calculation results.
-    pr_plot = Histogram(sorted_PR_df, values='Probability of PR (%)', bins=7, color='blue', title='', ylabel='', xlabel='') # 15
+    # pr_plot = Histogram(sorted_PR_df, values='Probability of PR (%)', bins=7, color='blue', title='', ylabel='', xlabel='') # 15
+    pr_plot = Bar(sorted_PR_df, label='Probability of PR (%)', bar_width=1, values="Index", agg="count", color='blue', title='', ylabel='', xlabel='', legend=False)
     pr_plot.title.text_font = "Roboto Slab"
     pr_plot.background_fill_alpha = 0
     pr_plot.border_fill_color = None
+    # pr_plot.x_range = Range1d(quantile_bottom_pr-20, quantile_top_pr+20)
     pr_plot.width = 600    # default : 600
     pr_plot.height = 250    # default : 600
     script_PR, div_PR = components(pr_plot)
 
-    pro_plot = Histogram(sorted_PRO_df, values='Probability of PRO (%)', bins=7, color='red', title='', ylabel='', xlabel='') # 15
+    # pro_plot = Histogram(sorted_PRO_df, values='Probability of PRO (%)', bins=7, color='red', title='', ylabel='', xlabel='') # 15
+    pro_plot = Bar(sorted_PRO_df, label='Probability of PRO (%)', bar_width=1, values="Index", agg="count", color='red', title='', ylabel='', xlabel='', legend=False)
     pro_plot.title.text_font = "Roboto Slab"
     pro_plot.background_fill_alpha = 0
     pro_plot.border_fill_color = None
+    # pro_plot.x_range = Range1d(quantile_bottom_pro-20, quantile_top_pro+20)
     pro_plot.width = 600    # default : 600
     pro_plot.height = 250    # default : 600
     script_Pro, div_Pro = components(pro_plot)
