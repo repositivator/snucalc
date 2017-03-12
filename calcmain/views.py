@@ -7,7 +7,7 @@ import math
 import pandas as pd
 import numpy as np
 from bokeh.charts import Bar, Histogram  # defaults, output_file, show
-from bokeh.models import Range1d
+from bokeh.models import Range1d, Span, Label
 from bokeh.embed import components
 
 
@@ -137,6 +137,18 @@ def data_summary(request, pk):
     sorted_plot.width = 600    # default : 600
     sorted_plot.height = 250    # default : 600
 
+    line_pr = Span(location=-30, dimension='width', line_color='blue', line_alpha=0.4, line_dash='solid', line_width=2,)
+    line_pro = Span(location=20, dimension='width', line_color='red', line_alpha=0.4, line_dash='solid', line_width=2,)
+    sorted_plot.add_layout(line_pr)
+    sorted_plot.add_layout(line_pro)
+
+    citation_pr = Label(x=400, y=135, x_units='screen', y_units='screen',
+                     text='Progression (+20%)', text_color='red', text_alpha=0.4, render_mode='css',)
+    citation_pro = Label(x=375, y=80, x_units='screen', y_units='screen',
+                     text='Partial response (-30%)', text_color='blue', text_alpha=0.4, render_mode='css',)
+    sorted_plot.add_layout(citation_pr)
+    sorted_plot.add_layout(citation_pro)
+
     script, div = components(sorted_plot)
 
     context = {
@@ -250,6 +262,19 @@ def data_reassessment1(request, pk):
     sorted_plot.border_fill_color = None
     sorted_plot.width = 600    # default : 600
     sorted_plot.height = 250    # default : 600
+
+    line_pr = Span(location=-30, dimension='width', line_color='blue', line_alpha=0.4, line_dash='solid', line_width=2,)
+    line_pro = Span(location=20, dimension='width', line_color='red', line_alpha=0.4, line_dash='solid', line_width=2,)
+    sorted_plot.add_layout(line_pr)
+    sorted_plot.add_layout(line_pro)
+
+    citation_pr = Label(x=400, y=135, x_units='screen', y_units='screen',
+                     text='Progression (+20%)', text_color='red', text_alpha=0.4, render_mode='css',)
+    citation_pro = Label(x=375, y=80, x_units='screen', y_units='screen',
+                     text='Partial response (-30%)', text_color='blue', text_alpha=0.4, render_mode='css',)
+    sorted_plot.add_layout(citation_pr)
+    sorted_plot.add_layout(citation_pro)
+
     script_summary, div_summary = components(sorted_plot)
 
     assumption_num = "1"
@@ -371,6 +396,19 @@ def data_reassessment2(request, pk):
     sorted_plot.border_fill_color = None
     sorted_plot.width = 600    # default : 600
     sorted_plot.height = 250    # default : 600
+
+    line_pr = Span(location=-30, dimension='width', line_color='blue', line_alpha=0.4, line_dash='solid', line_width=2,)
+    line_pro = Span(location=20, dimension='width', line_color='red', line_alpha=0.4, line_dash='solid', line_width=2,)
+    sorted_plot.add_layout(line_pr)
+    sorted_plot.add_layout(line_pro)
+
+    citation_pr = Label(x=400, y=135, x_units='screen', y_units='screen',
+                     text='Progression (+20%)', text_color='red', text_alpha=0.4, render_mode='css',)
+    citation_pro = Label(x=375, y=80, x_units='screen', y_units='screen',
+                     text='Partial response (-30%)', text_color='blue', text_alpha=0.4, render_mode='css',)
+    sorted_plot.add_layout(citation_pr)
+    sorted_plot.add_layout(citation_pro)
+
     script_summary, div_summary = components(sorted_plot)
 
     assumption_num = "2"
