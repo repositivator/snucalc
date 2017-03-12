@@ -6,7 +6,7 @@
 <div class="container">
 
     <div class="title text-center">
-        <h1 class="title title-introduction">Reassessment results</h1>
+        <h1 class="title title-introduction" style="padding-top: 0.5%;">Reassessment results</h1>
         <h4 class="sub-title">Assumption {{ assumption_num }}. <b>{{ radiologist }} radiologist</b> re-assesses tumor response.</h4>
     </div>
 
@@ -20,11 +20,14 @@
         {{ script_PR | safe }}
         {{ div_PR | safe }}
 
+        <p class="graph-uppatients" style="color: blue;"><b>n† = {{ up_patients }} (not considered to have measurement variability at repetition) </b></p>
+        <p class="graph-upmeaning">† numbers of patients having probability 0 for partial response at the repetition <br>(unequivocal radiologic progression, symptomatic progression or death)</p>
+
         <p class="graph-title">Probability of diagnosis as <span style="font-weight: bold; color: red;">progression</span> when re-assessed</p>
         {{ script_Pro | safe }}
         {{ div_Pro | safe }}
 
-        <p class="graph-uppatients"><b>n† = {{ up_patients }} (not included above) </b></p>
+        <p class="graph-uppatients"><b>n† = {{ up_patients }} (not considered to have measurement variability at repetition) </b></p>
         <p class="graph-upmeaning">† numbers of patients having probability 1 for progression at the repetition <br>(unequivocal radiologic progression, symptomatic progression or death)</p>
 
 

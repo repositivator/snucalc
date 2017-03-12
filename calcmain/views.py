@@ -483,7 +483,7 @@ def final_result(request, pk):
     pr_plot.border_fill_color = None
     # pr_plot.x_range = Range1d(quantile_bottom_pr-20, quantile_top_pr+20)
     pr_plot.width = 600    # default : 600
-    pr_plot.height = 250    # default : 600
+    pr_plot.height = 600    # default : 600
     script_PR, div_PR = components(pr_plot)
 
     # pro_plot = Histogram(sorted_PRO_df, values='Probability of PRO (%)', bins=7, color='red', title='', ylabel='', xlabel='') # 15
@@ -493,7 +493,7 @@ def final_result(request, pk):
     pro_plot.border_fill_color = None
     # pro_plot.x_range = Range1d(quantile_bottom_pro-20, quantile_top_pro+20)
     pro_plot.width = 600    # default : 600
-    pro_plot.height = 250    # default : 600
+    pro_plot.height = 600    # default : 600
     script_Pro, div_Pro = components(pro_plot)
 
     context = {
