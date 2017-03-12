@@ -7,7 +7,7 @@ import math
 import pandas as pd
 import numpy as np
 from bokeh.charts import Bar, Histogram  # defaults, output_file, show
-from bokeh.models import Range1d, Span, Label
+from bokeh.models import Range1d, Span, Label, BoxAnnotation
 from bokeh.embed import components
 
 
@@ -128,7 +128,7 @@ def data_summary(request, pk):
     study.sorted_df = sorted_df
     study.save()
 
-    sorted_plot = Bar(sorted_df, values='Percent change (%)', color="White", title='Percent change (%)', legend=None, ylabel="")
+    sorted_plot = Bar(sorted_df, values='Percent change (%)', color="White", title='Percent change (%)', legend=None, ylabel="", ygrid=False)
     sorted_plot.y_range = Range1d(-100, 100)
     sorted_plot.xaxis.visible = False
     sorted_plot.title.text_font = "Roboto Slab"
@@ -142,12 +142,19 @@ def data_summary(request, pk):
     sorted_plot.add_layout(line_pr)
     sorted_plot.add_layout(line_pro)
 
-    citation_pr = Label(x=400, y=135, x_units='screen', y_units='screen',
+    # line-only : x=400, y=135
+    citation_pr = Label(x=250, y=170, x_units='screen', y_units='screen',
                      text='Progression (+20%)', text_color='red', text_alpha=0.4, render_mode='css',)
-    citation_pro = Label(x=375, y=80, x_units='screen', y_units='screen',
+    # line-only : x=375, y=80
+    citation_pro = Label(x=235, y=30, x_units='screen', y_units='screen',
                      text='Partial response (-30%)', text_color='blue', text_alpha=0.4, render_mode='css',)
     sorted_plot.add_layout(citation_pr)
     sorted_plot.add_layout(citation_pro)
+
+    pr_box = BoxAnnotation(top=-30, fill_alpha=0.1, fill_color='blue')
+    pro_box = BoxAnnotation(bottom=20, fill_alpha=0.1, fill_color='red')
+    sorted_plot.add_layout(pr_box)
+    sorted_plot.add_layout(pro_box)
 
     script, div = components(sorted_plot)
 
@@ -254,7 +261,7 @@ def data_reassessment1(request, pk):
 
     # Summarized data (initial waterfall plot)
     sorted_df = study.sorted_df
-    sorted_plot = Bar(sorted_df, values='Percent change (%)', color="White", title='Percent change (%)', legend=None, ylabel="")
+    sorted_plot = Bar(sorted_df, values='Percent change (%)', color="White", title='Percent change (%)', legend=None, ylabel="", ygrid=False)
     sorted_plot.y_range = Range1d(-100, 100)
     sorted_plot.xaxis.visible = False
     sorted_plot.title.text_font = "Roboto Slab"
@@ -268,12 +275,19 @@ def data_reassessment1(request, pk):
     sorted_plot.add_layout(line_pr)
     sorted_plot.add_layout(line_pro)
 
-    citation_pr = Label(x=400, y=135, x_units='screen', y_units='screen',
+    # line-only : x=400, y=135
+    citation_pr = Label(x=250, y=170, x_units='screen', y_units='screen',
                      text='Progression (+20%)', text_color='red', text_alpha=0.4, render_mode='css',)
-    citation_pro = Label(x=375, y=80, x_units='screen', y_units='screen',
+    # line-only : x=375, y=80
+    citation_pro = Label(x=235, y=30, x_units='screen', y_units='screen',
                      text='Partial response (-30%)', text_color='blue', text_alpha=0.4, render_mode='css',)
     sorted_plot.add_layout(citation_pr)
     sorted_plot.add_layout(citation_pro)
+
+    pr_box = BoxAnnotation(top=-30, fill_alpha=0.1, fill_color='blue')
+    pro_box = BoxAnnotation(bottom=20, fill_alpha=0.1, fill_color='red')
+    sorted_plot.add_layout(pr_box)
+    sorted_plot.add_layout(pro_box)
 
     script_summary, div_summary = components(sorted_plot)
 
@@ -388,7 +402,7 @@ def data_reassessment2(request, pk):
 
     # Summarized data (initial waterfall plot)
     sorted_df = study.sorted_df
-    sorted_plot = Bar(sorted_df, values='Percent change (%)', color="White", title='Percent change (%)', legend=None, ylabel="")
+    sorted_plot = Bar(sorted_df, values='Percent change (%)', color="White", title='Percent change (%)', legend=None, ylabel="", ygrid=False)
     sorted_plot.y_range = Range1d(-100, 100)
     sorted_plot.xaxis.visible = False
     sorted_plot.title.text_font = "Roboto Slab"
@@ -402,12 +416,19 @@ def data_reassessment2(request, pk):
     sorted_plot.add_layout(line_pr)
     sorted_plot.add_layout(line_pro)
 
-    citation_pr = Label(x=400, y=135, x_units='screen', y_units='screen',
+    # line-only : x=400, y=135
+    citation_pr = Label(x=250, y=170, x_units='screen', y_units='screen',
                      text='Progression (+20%)', text_color='red', text_alpha=0.4, render_mode='css',)
-    citation_pro = Label(x=375, y=80, x_units='screen', y_units='screen',
+    # line-only : x=375, y=80
+    citation_pro = Label(x=235, y=30, x_units='screen', y_units='screen',
                      text='Partial response (-30%)', text_color='blue', text_alpha=0.4, render_mode='css',)
     sorted_plot.add_layout(citation_pr)
     sorted_plot.add_layout(citation_pro)
+
+    pr_box = BoxAnnotation(top=-30, fill_alpha=0.1, fill_color='blue')
+    pro_box = BoxAnnotation(bottom=20, fill_alpha=0.1, fill_color='red')
+    sorted_plot.add_layout(pr_box)
+    sorted_plot.add_layout(pro_box)
 
     script_summary, div_summary = components(sorted_plot)
 
