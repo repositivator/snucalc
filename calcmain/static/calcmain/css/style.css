@@ -304,6 +304,9 @@ td {
 .bk-plot-layout {
     margin: 0 auto;
 }
+.bk-original-dist {
+    margin-left: -1%;
+}
 
 .jumbotron {
     height: 450px;

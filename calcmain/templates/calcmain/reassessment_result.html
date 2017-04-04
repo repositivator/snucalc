@@ -14,7 +14,7 @@
 
         <p class="graph-title">Original distribution of patients in imported data</p>
         {{ script_summary | safe }}
-        {{ div_summary | safe }}
+        <div class="bk-original-dist">{{ div_summary | safe }}</div>
 
         <p class="graph-title">Probability of diagnosis as <span style="font-weight: bold; color: blue;">partial response</span> when re-assessed</p>
         {{ script_PR | safe }}

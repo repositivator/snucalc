@@ -267,7 +267,7 @@ def data_reassessment1(request, pk):
     sorted_plot.title.text_font = "Roboto Slab"
     sorted_plot.background_fill_alpha = 0
     sorted_plot.border_fill_color = None
-    sorted_plot.width = 600    # default : 600
+    sorted_plot.width = 606    # default : 600
     sorted_plot.height = 250    # default : 600
 
     line_pr = Span(location=-30, dimension='width', line_color='blue', line_alpha=0.4, line_dash='solid', line_width=2,)
@@ -408,7 +408,7 @@ def data_reassessment2(request, pk):
     sorted_plot.title.text_font = "Roboto Slab"
     sorted_plot.background_fill_alpha = 0
     sorted_plot.border_fill_color = None
-    sorted_plot.width = 600    # default : 600
+    sorted_plot.width = 606    # default : 600
     sorted_plot.height = 250    # default : 600
 
     line_pr = Span(location=-30, dimension='width', line_color='blue', line_alpha=0.4, line_dash='solid', line_width=2,)
