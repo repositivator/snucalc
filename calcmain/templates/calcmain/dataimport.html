@@ -41,7 +41,7 @@
                 <p class="help-block">Upload an excel file with a single sheet. (.xls &amp; .xlsx files only,
                 <a href="https://goo.gl/R6EmTF">click to download the example file.</a>)</p>
                 <input type="file" id="{{ form.imported_sheet.id_for_label }}" name="{{ form.imported_sheet.html_name}}">
-                <p class="help-block help-block-sub" style="margin-top: 1em;">* Column names should be <b>[ Patient ID, Organ (solid organ or lymph node), Lesion size at baseline (mm), Lesion size at post-treatment (mm) ]</b>.</p>
+                <p class="help-block help-block-sub" style="margin-top: 1em;">* Column names should be <b>[ Patient ID (ID should be continuous without any gap), Organ (solid organ or lymph node), Lesion size at baseline (mm; zero or positive integer), Lesion size at post-treatment (mm; zero or positive integer) ]</b>.</p>
                 <p class="help-block help-block-sub" style="margin-top: -0.5em;">* Details for target lesion measurement and tumour response evaluation follow RECIST guideline <br>(version 1.1; Eur J Cancer. 2009 Jan; 45(2):228-47).</p>
                 {{ form.imported_sheet.errors }}
             </div>
