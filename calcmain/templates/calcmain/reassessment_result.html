@@ -20,15 +20,15 @@
         {{ script_PR | safe }}
         {{ div_PR | safe }}
 
-        <p class="graph-uppatients" style="color: blue;"><b>n† = {{ up_patients }} (not considered to have measurement variability at repetition) </b></p>
-        <p class="graph-upmeaning">† numbers of patients having probability 0 for partial response at the repetition <br>(unequivocal radiologic progression, symptomatic progression or death)</p>
+        <p class="graph-uppatients" style="color: blue;"><b>n† = {{ up_patients }} (not considered to have measurement variability at reassessment) </b></p>
+        <p class="graph-upmeaning">† numbers of patients with probability 0 for partial response at the reassessment <br>(unequivocal radiologic progression, symptomatic progression, or death)</p>
 
         <p class="graph-title">Probability of diagnosis as <span style="font-weight: bold; color: red;">progression</span> when re-assessed</p>
         {{ script_Pro | safe }}
         {{ div_Pro | safe }}
 
-        <p class="graph-uppatients"><b>n† = {{ up_patients }} (not considered to have measurement variability at repetition) </b></p>
-        <p class="graph-upmeaning">† numbers of patients having probability 1 for progression at the repetition <br>(unequivocal radiologic progression, symptomatic progression or death)</p>
+        <p class="graph-uppatients"><b>n† = {{ up_patients }} (not considered to have measurement variability at reassessment) </b></p>
+        <p class="graph-upmeaning">† numbers of patients with probability 1 for progression at the reassessment <br>(unequivocal radiologic progression, symptomatic progression, or death)</p>
 
 
         <a class="btn btn-lg btn-default btn-processed" href="{% url 'calcmain:data_summary' pk=study.pk %}" role="button">Change assumption</a>

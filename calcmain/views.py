@@ -58,12 +58,12 @@ def data_process(request, pk):
 
     # Generate a dataframe for processing the data
     process_df = pd.DataFrame({'Patient ID': list(set([int(i) for i in main_df.ID]))})
-    process_df.loc[:, "Number of solid organ tumor"] = 0
-    process_df.loc[:, "Number of lymph node"] = 0
-    process_df.loc[:, "Tumor burden at the baseline (mm)"] = 0  # Sum of all lesion size at baseline per patient(ID)
-    process_df.loc[:, "Tumor burden at the post-treatment (mm)"] = 0 # Sum of all lesion size at post-treatment per patient(ID)
+    process_df.loc[:, "Number of solid organ tumors"] = 0
+    process_df.loc[:, "Number of lymph nodes"] = 0
+    process_df.loc[:, "Tumor burden at baseline (mm)"] = 0  # Sum of all lesion size at baseline per patient(ID)
+    process_df.loc[:, "Tumor burden at post-treatment (mm)"] = 0 # Sum of all lesion size at post-treatment per patient(ID)
     process_df.loc[:, "Lesion size at the baseline (mm)"] = np.nan # For checking patients who have only one lesion (Solid or Lymph)
-    process_df.loc[:, "Percent change (%)"] = 0
+    process_df.loc[:, "Percentage change (%)"] = 0
 
     # Check records and update cells
     for record in range(len(main_df.index)):
@@ -72,23 +72,23 @@ def data_process(request, pk):
         input_id = record_id - 1
 
         if re.match("lymph*", lesion_name):
-            process_df.loc[input_id, "Number of lymph node"] += 1
+            process_df.loc[input_id, "Number of lymph nodes"] += 1
         else:
-            process_df.loc[input_id, "Number of solid organ tumor"] += 1
-        process_df.loc[input_id, "Tumor burden at the baseline (mm)"] += main_df.iloc[:, 2][record]
-        process_df.loc[input_id, "Tumor burden at the post-treatment (mm)"] += main_df.iloc[:, 3][record]
+            process_df.loc[input_id, "Number of solid organ tumors"] += 1
+        process_df.loc[input_id, "Tumor burden at baseline (mm)"] += main_df.iloc[:, 2][record]
+        process_df.loc[input_id, "Tumor burden at post-treatment (mm)"] += main_df.iloc[:, 3][record]
 
 
-    process_df.loc[:, "Number of solid organ tumor"] = process_df.loc[:, "Number of solid organ tumor"].astype(int)
-    process_df.loc[:, "Number of lymph node"] = process_df.loc[:, "Number of lymph node"].astype(int)
-    process_df.loc[:, "Tumor burden at the baseline (mm)"] = process_df.loc[:, "Tumor burden at the baseline (mm)"].astype(int)
-    process_df.loc[:, "Tumor burden at the post-treatment (mm)"] = process_df.loc[:, "Tumor burden at the post-treatment (mm)"].astype(int)
+    process_df.loc[:, "Number of solid organ tumors"] = process_df.loc[:, "Number of solid organ tumors"].astype(int)
+    process_df.loc[:, "Number of lymph nodes"] = process_df.loc[:, "Number of lymph nodes"].astype(int)
+    process_df.loc[:, "Tumor burden at baseline (mm)"] = process_df.loc[:, "Tumor burden at baseline (mm)"].astype(int)
+    process_df.loc[:, "Tumor burden at post-treatment (mm)"] = process_df.loc[:, "Tumor burden at post-treatment (mm)"].astype(int)
 
     # Check processed dataframe and update cells
     for record in range(len(process_df.index)):
-        process_df.loc[record, 'Percent change (%)'] = math.floor((process_df.loc[record, "Tumor burden at the post-treatment (mm)"] - process_df.loc[record, "Tumor burden at the baseline (mm)"]) / process_df.loc[record, "Tumor burden at the baseline (mm)"] * 100)
-        if process_df.loc[record, "Number of lymph node"] + process_df.loc[record, "Number of solid organ tumor"] == 1:
-            process_df.loc[record, "Lesion size at the baseline (mm)"] = int(main_df.loc[main_df['ID'] == record + 1]['Lesion size at baseline (mm)'])
+        process_df.loc[record, 'Percentage change (%)'] = math.floor((process_df.loc[record, "Tumor burden at post-treatment (mm)"] - process_df.loc[record, "Tumor burden at baseline (mm)"]) / process_df.loc[record, "Tumor burden at baseline (mm)"] * 100)
+        if process_df.loc[record, "Number of lymph nodes"] + process_df.loc[record, "Number of solid organ tumors"] == 1:
+            process_df.loc[record, "Lesion size at baseline (mm)"] = int(main_df.loc[main_df['ID'] == record + 1]['Lesion size at baseline (mm)'])
 
     study.processed_df = process_df
     study.save()
@@ -96,7 +96,7 @@ def data_process(request, pk):
     context = {
         "study": study,
         "data": process_df.to_html(
-            columns=['Patient ID', 'Number of solid organ tumor', 'Number of lymph node', 'Percent change (%)', 'Tumor burden at the baseline (mm)', 'Tumor burden at the post-treatment (mm)'],
+            columns=['Patient ID', 'Number of solid organ tumors', 'Number of lymph nodes', 'Percentage change (%)', 'Tumor burden at baseline (mm)', 'Tumor burden at post-treatment (mm)'],
             index=False, na_rep="", bold_rows=True, classes=["table", "table-hover", "table-processed"])
     }
     return render(request, "calcmain/data_processed.html", context)
@@ -112,9 +112,9 @@ def data_summary(request, pk):
     # Calculate the proportions of patients based on diagnosis results.
     num_partial_response = num_progression = 0
     for id in range(len(processed_df.index)):
-        if processed_df.loc[:, "Percent change (%)"][id] <= -30:
+        if processed_df.loc[:, "Percentage change (%)"][id] <= -30:
             num_partial_response += 1
-        elif processed_df.loc[:, "Percent change (%)"][id] >= 20:
+        elif processed_df.loc[:, "Percentage change (%)"][id] >= 20:
             num_progression += 1
 
     partial_response_prop = round(num_partial_response / num_all_patients * 100, 2)
@@ -122,13 +122,13 @@ def data_summary(request, pk):
 
     # Draw a plot for visualizing patients' diagnosis results.
     new_data = {'Index': [i + 1 for i in range(len(processed_df.index))],
-               'Percent change (%)': sorted(processed_df.loc[:, "Percent change (%)"], reverse=True)}
+               'Percentage change (%)': sorted(processed_df.loc[:, "Percentage change (%)"], reverse=True)}
     sorted_df = pd.DataFrame(new_data)
 
     study.sorted_df = sorted_df
     study.save()
 
-    sorted_plot = Bar(sorted_df, values='Percent change (%)', color="White", title='Percent change (%)', legend=None, ylabel="", ygrid=False)
+    sorted_plot = Bar(sorted_df, values='Percentage change (%)', color="White", title='Percentage change (%)', legend=None, ylabel="", ygrid=False)
     sorted_plot.y_range = Range1d(-100, 100)
     sorted_plot.xaxis.visible = False
     sorted_plot.title.text_font = "Roboto Slab"
@@ -196,7 +196,7 @@ def data_reassessment1(request, pk):
     Pro_Singular = change_index(Pro_Singular)
 
     # 2-1) Prepare the new dataframe about reassessment result (PartialResponse, Progression)
-    processed_df = study.processed_df[['Patient ID', 'Number of solid organ tumor', 'Number of lymph node', 'Lesion size at the baseline (mm)', 'Percent change (%)']]
+    processed_df = study.processed_df[['Patient ID', 'Number of solid organ tumors', 'Number of lymph nodes', 'Lesion size at baseline (mm)', 'Percentage change (%)']]
     processed_df.columns = ['ID', 'NS', 'NL', 'LS', 'PC']
 
     processed_df.loc[:, 'NS'] = processed_df.loc[:, 'NS'].astype(str)
@@ -261,7 +261,7 @@ def data_reassessment1(request, pk):
 
     # Summarized data (initial waterfall plot)
     sorted_df = study.sorted_df
-    sorted_plot = Bar(sorted_df, values='Percent change (%)', color="White", title='Percent change (%)', legend=None, ylabel="", ygrid=False)
+    sorted_plot = Bar(sorted_df, values='Percentage change (%)', color="White", title='Percentage change (%)', legend=None, ylabel="", ygrid=False)
     sorted_plot.y_range = Range1d(-100, 100)
     sorted_plot.xaxis.visible = False
     sorted_plot.title.text_font = "Roboto Slab"
@@ -337,7 +337,7 @@ def data_reassessment2(request, pk):
     Pro_Singular = change_index(Pro_Singular)
 
     # 2-1) Prepare the new dataframe about reassessment result (PartialResponse, Progression)
-    processed_df = study.processed_df[['Patient ID', 'Number of solid organ tumor', 'Number of lymph node', 'Lesion size at the baseline (mm)', 'Percent change (%)']]
+    processed_df = study.processed_df[['Patient ID', 'Number of solid organ tumors', 'Number of lymph nodes', 'Lesion size at baseline (mm)', 'Percentage change (%)']]
     processed_df.columns = ['ID', 'NS', 'NL', 'LS', 'PC']
 
     processed_df.loc[:, 'NS'] = processed_df.loc[:, 'NS'].astype(str)
@@ -402,7 +402,7 @@ def data_reassessment2(request, pk):
 
     # Summarized data (initial waterfall plot)
     sorted_df = study.sorted_df
-    sorted_plot = Bar(sorted_df, values='Percent change (%)', color="White", title='Percent change (%)', legend=None, ylabel="", ygrid=False)
+    sorted_plot = Bar(sorted_df, values='Percentage change (%)', color="White", title='Percentage change (%)', legend=None, ylabel="", ygrid=False)
     sorted_plot.y_range = Range1d(-100, 100)
     sorted_plot.xaxis.visible = False
     sorted_plot.title.text_font = "Roboto Slab"
@@ -498,20 +498,22 @@ def final_result(request, pk):
 
     # 5) Draw histogram plots for visualizing calculation results.
     # pr_plot = Histogram(sorted_PR_df, values='Probability of PR (%)', bins=7, color='blue', title='', ylabel='', xlabel='') # 15
-    pr_plot = Bar(sorted_PR_df, label='Probability of PR (%)', bar_width=1, values="Index", agg="count", color='blue', title='', ylabel='', xlabel='', legend=False)
+    pr_plot = Bar(sorted_PR_df, label='Probability of PR (%)', bar_width=1, values="Index", agg="count", color='blue', title='', xlabel='Observed objective response rate', ylabel='Number of obervation', legend=False)
     pr_plot.title.text_font = "Roboto Slab"
     pr_plot.background_fill_alpha = 0
     pr_plot.border_fill_color = None
+    pr_plot.xaxis.axis_label = 'Observed objective response rate'
     # pr_plot.x_range = Range1d(quantile_bottom_pr-20, quantile_top_pr+20)
     pr_plot.width = 600    # default : 600
     pr_plot.height = 600    # default : 600
     script_PR, div_PR = components(pr_plot)
 
     # pro_plot = Histogram(sorted_PRO_df, values='Probability of PRO (%)', bins=7, color='red', title='', ylabel='', xlabel='') # 15
-    pro_plot = Bar(sorted_PRO_df, label='Probability of PRO (%)', bar_width=1, values="Index", agg="count", color='red', title='', ylabel='', xlabel='', legend=False)
+    pro_plot = Bar(sorted_PRO_df, label='Probability of PRO (%)', bar_width=1, values="Index", agg="count", color='red', title='', xlabel='Observed objective response rate', ylabel='Number of obervation', legend=False)
     pro_plot.title.text_font = "Roboto Slab"
     pro_plot.background_fill_alpha = 0
     pro_plot.border_fill_color = None
+    pr_plot.xaxis.axis_label = 'Observed objective response rate'
     # pro_plot.x_range = Range1d(quantile_bottom_pro-20, quantile_top_pro+20)
     pro_plot.width = 600    # default : 600
     pro_plot.height = 600    # default : 600

@@ -17,21 +17,21 @@
 
             <div class="form-group" style="width: 45%; float: left;">
                 <label for="{{ form.study_name.id_for_label }}">Study Name</label>
-                <input type="text" class="form-control" id="{{ form.study_name.id_for_label }}" name="{{ form.study_name.html_name}}" placeholder="Please insert the study name.">
+                <input type="text" class="form-control" id="{{ form.study_name.id_for_label }}" name="{{ form.study_name.html_name}}" placeholder="Please insert study name.">
                 {{ form.study_name.errors }}
             </div>
 
             <div class="form-group" style="width: 45%; float: right;">
                 <label for="{{ form.treatment_name.id_for_label }}">Treatment name</label>
-                <input type="text" class="form-control" id="{{ form.treatment_name.id_for_label }}" name="{{ form.treatment_name.html_name}}" placeholder="Please insert the treatment name.">
+                <input type="text" class="form-control" id="{{ form.treatment_name.id_for_label }}" name="{{ form.treatment_name.html_name}}" placeholder="Please insert treatment name.">
                 {{ form.treatment_name.errors }}
             </div>
 
             <div class="form-group">
                 <label for="{{ form.up_patients.id_for_label }}">
-                    Number of enrolled patients having unequivocal radiologic progression, symptomatic progression or death
+                    Number of enrolled patients with unequivocal radiologic progression, symptomatic progression or death
                 </label>
-                <input type="text" class="form-control" id="{{ form.up_patients.id_for_label }}" name="{{ form.up_patients.html_name}}" placeholder="Please insert a number (ex. 0)">
+                <input type="text" class="form-control" id="{{ form.up_patients.id_for_label }}" name="{{ form.up_patients.html_name}}" placeholder="Please insert number (ex. 0)">
                 {{ form.up_patients.errors }}
             </div>
 
@@ -39,10 +39,10 @@
             <div class="form-group">
                 <label for="{{ form.imported_sheet.id_for_label }}">Import your excel file(xls, xlsx)</label>
                 <p class="help-block">Upload an excel file with a single sheet. (.xls &amp; .xlsx files only,
-                <a href="https://goo.gl/R6EmTF">click to download the example file.</a>)</p>
+                <a href="https://goo.gl/R6EmTF">click this to download example file.</a>)</p>
                 <input type="file" id="{{ form.imported_sheet.id_for_label }}" name="{{ form.imported_sheet.html_name}}">
-                <p class="help-block help-block-sub" style="margin-top: 1em;">* Column names should be <b>[ Patient ID (ID should be continuous without any gap), Organ (solid organ or lymph node), Lesion size at baseline (mm; zero or positive integer), Lesion size at post-treatment (mm; zero or positive integer) ]</b>.</p>
-                <p class="help-block help-block-sub" style="margin-top: -0.5em;">* Details for target lesion measurement and tumour response evaluation follow RECIST guideline <br>(version 1.1; Eur J Cancer. 2009 Jan; 45(2):228-47).</p>
+                <p class="help-block help-block-sub" style="margin-top: 1em;">* Column name should be <b>[Patient ID (ID number must be consecutive with no gap), Organ (solid organ or lymph node), Lesion size at baseline (mm; zero or positive integer), Lesion size at post-treatment (mm; zero or positive integer)]</b>.</p>
+                <p class="help-block help-block-sub" style="margin-top: -0.5em;">* Details for target lesion measurement and tumor response evaluation follow RECIST guideline <br>(version 1.1; Eur J Cancer. 2009 Jan; 45(2):228-47).</p>
                 {{ form.imported_sheet.errors }}
             </div>
 

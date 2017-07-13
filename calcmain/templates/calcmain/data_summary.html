@@ -7,7 +7,7 @@
 <div class="container">
 
     <div class="title text-center">
-        <h1 class="title title-introduction">Summary of the data</h1>
+        <h1 class="title title-introduction">Summary of data</h1>
     </div>
 
     <div class="div-aligncenter div-centered">
@@ -21,7 +21,7 @@
                 <td><b>{{ num_all_patients }}</b></td>
             </tr>
             <tr>
-                <td>Number of enrolled patients <br>having unequivocal radiologic progression, <br>symptomatic progression or death</td>
+                <td>Number of enrolled patients <br>with unequivocal radiologic progression, <br>symptomatic progression or death</td>
                 <td><b>{{ study.up_patients }}</b></td>
             </tr>
         </table>
@@ -29,16 +29,16 @@
         <p class="graph-title" style="margin-top: 0%; margin-bottom: 0%;">Waterfall plot</p>
         {{ script | safe }}
         {{ div | safe }}
-        <p class="graph-upmeaning" style="margin-left: 12%; margin-top: -2%;"><b>Distribution of the percent-change(%) of patients in imported data</b>
-        <p class="graph-upmeaning" style="margin-left: 12%; font-size: 0.77em;">(Patients having unequivocal radiologic progression, symptomatic progression or death <b>are not included<b>)</p>
+        <p class="graph-upmeaning" style="margin-left: 12%; margin-top: -2%;"><b>Distribution of the percentage change(%) of patients in the imported data</b>
+        <p class="graph-upmeaning" style="margin-left: 12%; font-size: 0.77em;">(Patients with unequivocal radiologic progression, symptomatic progression or death <b>are not included<b>)</p>
 
         <table class="table table-hover table-summary">
             <tr>
-                <td>Proportion of patients who were diagnosed with partial response<br><b>(percent change ≤ -30%)</b></td>
+                <td>Proportion of patients diagnosed with partial response<br><b>(percentage change ≤ -30%)</b></td>
                 <td><b>{{ partial_response_prop }}%</b></td>
             </tr>
             <tr>
-                <td>Proportion of patients who were diagnosed with progression<br><b>(percent change ≥ +20%, unequivocal, symptomatic progression  or death)</b></td>
+                <td>Proportion of patients diagnosed with progression<br><b>(percentage change ≥ +20%, unequivocal, symptomatic progression  or death)</b></td>
                 <td><b>{{ progression_prop }}%</b></td>
             </tr>
         </table>
@@ -46,9 +46,10 @@
         <div class="select-summary">
             <label for="sel-assumption">Which results do you want to confirm?</label>
             <select class="form-control" id="sel-assumption" name="sel-assumption" style="font-weight: bold">
-                <option value="0" style="font-weight: bold">Please select an assumption.</option>
-                <option value="1">Assumption 1. Same radiologist re-assesses tumor response.</option>
-                <option value="2">Assumption 2. Another radiologist re-assesses tumor response.</option>
+                <option value="0" style="font-weight: bold">Please select an assumption</option>
+                <option value="1">Assumption 1. Same radiologist re-assesses tumor response</option>
+                <option value="2">Assumption 2. Another radiologist re-assesses tumor response</option>
+                <option value="3" disabled>(simple form of blind central independent review)</option>
             </select>
         </div>
 
