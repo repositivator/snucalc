@@ -87,6 +87,8 @@ def data_process(request, pk):
     # Check processed dataframe and update cells
     for record in range(len(process_df.index)):
         process_df.loc[record, 'Percentage change (%)'] = math.floor((process_df.loc[record, "Tumor burden at post-treatment (mm)"] - process_df.loc[record, "Tumor burden at baseline (mm)"]) / process_df.loc[record, "Tumor burden at baseline (mm)"] * 100)
+        if process_df.loc[record, 'Percentage change (%)'] == -100:
+            process_df.loc[record, 'Percentage change (%)'] = -99
         if process_df.loc[record, "Number of lymph nodes"] + process_df.loc[record, "Number of solid organ tumors"] == 1:
             process_df.loc[record, "Lesion size at baseline (mm)"] = int(main_df.loc[main_df['ID'] == record + 1]['Lesion size at baseline (mm)'])
 
