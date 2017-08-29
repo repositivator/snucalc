@@ -62,7 +62,7 @@ def data_process(request, pk):
     process_df.loc[:, "Number of lymph nodes"] = 0
     process_df.loc[:, "Tumor burden at baseline (mm)"] = 0  # Sum of all lesion size at baseline per patient(ID)
     process_df.loc[:, "Tumor burden at post-treatment (mm)"] = 0 # Sum of all lesion size at post-treatment per patient(ID)
-    process_df.loc[:, "Lesion size at the baseline (mm)"] = np.nan # For checking patients who have only one lesion (Solid or Lymph)
+    process_df.loc[:, "Lesion size at baseline (mm)"] = np.nan # For checking patients who have only one lesion (Solid or Lymph)
     process_df.loc[:, "Percentage change (%)"] = 0
 
     # Check records and update cells
@@ -511,7 +511,7 @@ def final_result(request, pk):
     script_PR, div_PR = components(pr_plot)
 
     # pro_plot = Histogram(sorted_PRO_df, values='Probability of PRO (%)', bins=7, color='red', title='', ylabel='', xlabel='') # 15
-    pro_plot = Bar(sorted_PRO_df, label='Probability of PRO (%)', bar_width=1, values="Index", agg="count", color='red', title='', xlabel='Observed objective response rate', ylabel='Number of obervation', legend=False)
+    pro_plot = Bar(sorted_PRO_df, label='Probability of PRO (%)', bar_width=1, values="Index", agg="count", color='red', title='', xlabel='Observed progression rate', ylabel='Number of obervation', legend=False)
     pro_plot.title.text_font = "Roboto Slab"
     pro_plot.background_fill_alpha = 0
     pro_plot.border_fill_color = None
